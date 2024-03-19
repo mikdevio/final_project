@@ -12,15 +12,13 @@ const app = express();
 
 /* App configurations */
 // File paths
+app.use('/public', express.static(path.join(__dirname, "public")));
 app.set('views', path.join(__dirname, 'views'));
-app.set(express.static(path.join(__dirname, 'public')));
-// View render engine
 app.set('view engine', 'ejs');
 
 // Use of routers
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 app.listen(PORT, () => {
     console.log(`App ready on port ${PORT}`);
