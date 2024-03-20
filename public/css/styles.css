@@ -1,3 +1,13 @@
+:root {
+    --sidebar-bg-color: #2b3035;
+    --dashboard-bg-color: #444444;
+    --sidebar-bg-hover: rgba(255, 255, 255, .075);
+    --card-bg-color: #2b3035;
+    --sidebar-text: #fff;
+    --navbar-shadow:  rgba(33, 37, 41, .1);
+    --sidebar-link-hover: #3b7ddd;
+}
+
 .box {
     fill: gray;
     width:100%;
@@ -41,7 +51,7 @@ h1 {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     min-width: 0;
-    background-color: #444;
+    background-color: var(--dashboard-bg-color); /*#444444;*/
 }
 
 #sidebar {
@@ -49,7 +59,7 @@ h1 {
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #2b3035;
+    background-color: var(--sidebar-bg-color);
     display: flex;
     flex-direction: column;
 }
@@ -68,7 +78,7 @@ h1 {
 
 .toggle-btn i {
     font-size: 1.5rem;
-    color: #FFF;
+    color: var(--sidebar-text);
 }
 
 .sidebar-logo {
@@ -76,7 +86,7 @@ h1 {
 }
 
 .sidebar-logo a {
-    color: #FFF;
+    color: var(--sidebar-text);
     font-size: 1.15rem;
     font-weight: 600;
 }
@@ -93,7 +103,7 @@ h1 {
 
 a.sidebar-link {
     padding: .625rem 1.625rem;
-    color: #FFF;
+    color: var(--sidebar-text);
     display: block;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -106,8 +116,8 @@ a.sidebar-link {
 }
 
 a.sidebar-link:hover {
-    background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #3b7ddd;
+    background-color: var(--sidebar-bg-hover);
+    border-left: 3px solid var(--sidebar-link-hover);
 }
 
 .sidebar-item {
@@ -118,7 +128,7 @@ a.sidebar-link:hover {
     position: absolute;
     top: 0;
     left: 70px;
-    background-color: #0e2238;
+    background-color: var(--sidebar-bg-color);
     padding: 0;
     min-width: 15rem;
     display: none;
@@ -150,8 +160,8 @@ a.sidebar-link:hover {
 }
 
 .navbar {
-    background-color:#444;
-    box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .1);
+    background-color: var(--dashboard-bg-color);
+    box-shadow: 0 0 2rem 0 var(--navbar-shadow);
 }
 
 .navbar-expand .navbar-collapse {
@@ -160,6 +170,10 @@ a.sidebar-link:hover {
 
 .chart-container {
     width: 30vw;
-    height: 35vh;
+    height: 30vh;
     margin: auto;
+}
+
+.card {
+    background-color: var(--card-bg-color);
 }
