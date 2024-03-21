@@ -1,15 +1,20 @@
 :root {
     --sidebar-bg-color: #2b3035;
-    --dashboard-bg-color: #444444;
+    --dashboard-bg-color: #4d4d4d;
     --sidebar-bg-hover: rgba(255, 255, 255, .075);
     --card-bg-color: #2b3035;
     --sidebar-text: #fff;
     --navbar-shadow:  rgba(33, 37, 41, .1);
     --sidebar-link-hover: #3b7ddd;
+    --carousel-bg-box: gray;
+
+    --sidebar-width-collapse: 50px;
+    --sidebar-width-expande: 240px;
+    --sidebar-button-hpadding: 0.75rem;
 }
 
 .box {
-    fill: gray;
+    fill: var(--carousel-bg-box);
     width:100%;
     height:100%;
 }
@@ -55,8 +60,8 @@ h1 {
 }
 
 #sidebar {
-    width: 70px;
-    min-width: 70px;
+    width: var(--sidebar-width-collapse);
+    min-width: var(--sidebar-width-collapse);
     z-index: 1000;
     transition: all .25s ease-in-out;
     background-color: var(--sidebar-bg-color);
@@ -65,15 +70,15 @@ h1 {
 }
 
 #sidebar.expand {
-    width: 260px;
-    min-width: 260px;
+    width: var(--sidebar-width-expande);
+    min-width: var(--sidebar-width-expande);
 }
 
 .toggle-btn {
     background-color: transparent;
     cursor: pointer;
     border: 0;
-    padding: 1rem 1.5rem;
+    padding: 1rem var(--sidebar-button-hpadding);
 }
 
 .toggle-btn i {
@@ -102,7 +107,7 @@ h1 {
 }
 
 a.sidebar-link {
-    padding: .625rem 1.625rem;
+    padding: .625rem var(--sidebar-button-hpadding);
     color: var(--sidebar-text);
     display: block;
     font-size: 0.9rem;
@@ -127,7 +132,7 @@ a.sidebar-link:hover {
 #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
     position: absolute;
     top: 0;
-    left: 70px;
+    left: var(--sidebar-width-collapse);
     background-color: var(--sidebar-bg-color);
     padding: 0;
     min-width: 15rem;
