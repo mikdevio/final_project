@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th scope="column">#</th>
-                        <% cols.forEach(col_name => { %>
+                        <% Object.keys(data[0]._doc).forEach(col_name => { %>
                             <% if(col_name != "_id") { %>
                                 <th scope="column"><%= col_name %></th>
                             <% } %>
@@ -45,7 +45,7 @@
                     <% data.forEach((element, i) => { %>
                     <tr>
                         <th scope="row"><%= i+1 %></th>
-                        <% cols.forEach(col => { %>
+                        <% Object.keys(data[0]._doc).forEach(col => { %>
                             <% if(col != "_id") { %>
                                 <td><%= element[col] %></td>
                         <% } }); %>

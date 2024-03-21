@@ -20,9 +20,7 @@ router.get('/dashboard', (req, res) => {
 
 router.get('/users', async (req, res) => {
     const usersList = await User.find({});
-    const colsList = Object.keys(usersList[0]._doc);
-    // console.log(Object.keys(User.schema.paths));
-    res.render('users', {cols: colsList, data: usersList});
+    res.render('users', {data: usersList});
 });
 
 

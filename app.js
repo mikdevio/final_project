@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const indexRouter = require('./controllers/index.controller');
 const userRouter = require('./controllers/user.controller');
@@ -27,6 +28,9 @@ async function main() {
 app.use('/public', express.static(path.join(__dirname, "public")));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// Parse url-encoded bodies (HTML forms)
+app. use(bodyParser.json());
+
 
 // Use of routers
 app.use('/', indexRouter);
