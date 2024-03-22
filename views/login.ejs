@@ -1,35 +1,35 @@
 <%- include('partials/header') %>
 
-<div class="container min-vh-100 d-flex justify-content-center align-items-center">
-    <div class="card w-50 h-25 ">
-        <div class="card-header d-flex justify-content-around ">
-            <div class="container d-md-flex align-items-baseline gap-2 ">
-                <i class="bi bi-door-open-fill h4"></i>
-                <h4 class="modal-title fs-5" id="exampleModalToggleLabel2">Login</h4>
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="card w-50 h-25 ">
+            <div class="card-header d-flex justify-content-around ">
+                <div class="container d-md-flex align-items-baseline gap-2 ">
+                    <i class="bi bi-door-open-fill h4"></i>
+                    <h4 class="modal-title fs-5" id="exampleModalToggleLabel2">Login</h4>
+                </div>
+                <a class="text-white" href="/"><i class="bi bi-house h4"></i></a>
             </div>
-            <a class="text-white" href="/"><i class="bi bi-house h4"></i></a>
-        </div>
 
-        <div class="card-body">
-            <form>
-                <div class="form-floating mb-3 form-group-sm">
-                    <input type="email" class="form-control" id="floatingEmail" placeholder="name@email.com">
-                    <label for="floatingEmail">Email address</label>
-                </div>
-                <div class="form-floating mb-3 form-group-sm">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingEmail">Password</label>
-                </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-floating mb-3 form-group-sm">
+                        <input type="email" class="form-control" id="floatingEmail" placeholder="name@email.com">
+                        <label for="floatingEmail">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3 form-group-sm">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingEmail">Password</label>
+                    </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-success btn-sm" type="submit" >Login</button>
-                    <a class="btn btn-warning btn-sm" href="/user/signup">Create an account</a>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer d-flex justify-content-end ">
-            <p class="text-body-tertiary">@mikdevio</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-success btn-sm" type="submit">Login</button>
+                        <a class="btn btn-warning btn-sm" href="/user/signup">Create an account</a>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer d-flex justify-content-end ">
+                <p class="text-body-tertiary">@mikdevio</p>
+            </div>
         </div>
     </div>
-</div>
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>

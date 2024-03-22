@@ -4,7 +4,7 @@
     --sidebar-bg-hover: rgba(255, 255, 255, .075);
     --card-bg-color: #2b3035;
     --sidebar-text: #fff;
-    --navbar-shadow:  rgba(33, 37, 41, .1);
+    --navbar-shadow: rgba(33, 37, 41, .1);
     --sidebar-link-hover: #3b7ddd;
     --carousel-bg-box: gray;
 
@@ -15,12 +15,12 @@
 
 .box {
     fill: var(--carousel-bg-box);
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 }
 
 .carousel-box {
-    height:95vh;
+    height: 92vh;
 }
 
 
@@ -56,7 +56,8 @@ h1 {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     min-width: 0;
-    background-color: var(--dashboard-bg-color); /*#444444;*/
+    background-color: var(--dashboard-bg-color);
+    /*#444444;*/
 }
 
 #sidebar {

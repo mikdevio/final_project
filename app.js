@@ -17,7 +17,7 @@ const app = express();
 main().then(() => {
     console.log("MongoDB connection Successfully");
 })
-.catch(err => console.log(err));
+    .catch(err => console.log(err));
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/final_project');
@@ -29,7 +29,7 @@ app.use('/public', express.static(path.join(__dirname, "public")));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // Parse url-encoded bodies (HTML forms)
-app. use(bodyParser.json());
+app.use(bodyParser.json());
 
 
 // Use of routers

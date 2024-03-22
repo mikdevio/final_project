@@ -3,73 +3,87 @@
         <div class="card-header">
             <div class="container">
                 <div class="row justify-content-between">
+                    <div class="col">
+                        <h5>
+                            <%= table_title %>
+                        </h5>
+                    </div>
                     <div class="col-4 gap-2 ps-0 ">
                         <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Export</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Import</a>
                     </div>
                     <div class="col-auto d-flex gap-2 pe-0 ">
-                            <div class="dropdown">
-                                <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Filters
-                                </a>
-                              
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                  <li><a class="dropdown-item" href="#">Action</a></li>
-                                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div>
-                            <div class="input-group">
-                                <input type="text" class="form-control-sm" placeholder="Search criterion" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Search</button>
-                            </div>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Filters
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control-sm" placeholder="Search criterion"
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Search</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="card-body">
-            <table class="table table-hover table-dark ">
+            <table class="table table-hover table-dark mb-0">
                 <thead>
                     <tr>
                         <th scope="column">#</th>
-                        <% Object.keys(data[0]._doc).forEach(col_name => { %>
-                            <% if(col_name != "_id") { %>
-                                <th scope="column"><%= col_name %></th>
-                            <% } %>
-                        <% }); %>
-                        <th scope="column">actions</th>
+                        <% Object.keys(data[0]._doc).forEach(col_name=> { %>
+                            <% if(col_name !="_id" ) { %>
+                                <th scope="column">
+                                    <%= col_name %>
+                                </th>
+                                <% } %>
+                                    <% }); %>
+                                        <th scope="column">actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% data.forEach((element, i) => { %>
-                    <tr>
-                        <th scope="row"><%= i+1 %></th>
-                        <% Object.keys(data[0]._doc).forEach(col => { %>
-                            <% if(col != "_id") { %>
-                                <td><%= element[col] %></td>
-                        <% } }); %>
-                        <td>
-                            <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                            <a href="#" class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i></a>
-                            <a href="#" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                        </td>
-                    </tr>
-                    <% }); %>
+                    <% data.forEach((element, i)=> { %>
+                        <tr>
+                            <th scope="row">
+                                <%= i+1 %>
+                            </th>
+                            <% Object.keys(data[0]._doc).forEach(col=> { %>
+                                <% if(col !="_id" ) { %>
+                                    <td>
+                                        <%= element[col] %>
+                                    </td>
+                                    <% } }); %>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                            <a href="#" class="btn btn-success btn-sm"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <a href="#" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                        </td>
+                        </tr>
+                        <% }); %>
                 </tbody>
             </table>
         </div>
 
-        <div class="card-footer">
+        <div class="card-footer pb-0">
             <div class="row justify-content-end ">
                 <div class="col-auto">
                     <nav aria-label="table_pages">
-                        <ul class="pagination">
-                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <ul class="pagination mb-2">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
                         </ul>
                     </nav>
                 </div>

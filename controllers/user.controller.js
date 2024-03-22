@@ -9,18 +9,21 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-
-
     res.render('signup');
+});
+
+router.post('/signup', (req, res) => {
+    const data = req.body;
+    console.log(data);
 });
 
 router.get('/dashboard', (req, res) => {
     res.render('dashboard');
 });
 
-router.get('/users', async (req, res) => {
+router.get('/users', async (_, res) => {
     const usersList = await User.find({});
-    res.render('users', {data: usersList});
+    res.render('users', { data: usersList, table_title: "Users" });
 });
 
 
