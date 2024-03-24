@@ -7,6 +7,9 @@ const expressLayouts = require('express-ejs-layouts');
 const userRouter = require('./controllers/user.controller');
 const indexRouter = require('./controllers/index.controller');
 const productRouter = require('./controllers/product.controller');
+const roleRouter = require('./controllers/role.controller');
+const categoryRouter = require('./controllers/category.controller');
+const customerRouter = require('./controllers/customer.controller');
 
 // Settings
 const PORT = 3500;
@@ -44,10 +47,12 @@ app.use(bodyParser.json())
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/product', productRouter);
+app.use('/role', roleRouter);
+app.use('/category', categoryRouter);
+app.use('/customer', customerRouter);
 
 app.listen(PORT, () => {
     console.log(`App ready on port ${PORT}`);
-    console.log(path.join(__dirname, 'public'));
 });
 
 
