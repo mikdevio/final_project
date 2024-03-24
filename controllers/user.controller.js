@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('user.login.ejs');
 });
 
 router.post('/login', (req, res) => {
@@ -15,7 +15,7 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('user.signup.ejs');
 });
 
 router.post('/signup', (req, res) => {
@@ -25,12 +25,12 @@ router.post('/signup', (req, res) => {
 });
 
 router.get('/dashboard', (req, res) => {
-    res.render('dashboard');
+    res.render('user.dashboard.ejs');
 });
 
 router.get('/all', async (_, res) => {
     const usersList = await User.find({});
-    res.render('users', { data: usersList, table_title: "Users" });
+    res.render('user.all.ejs', { data: usersList, table_title: "Users" });
 });
 
 

@@ -1,14 +1,16 @@
-const express = require('express');
 const path = require('path');
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const expressLayouts = require('express-ejs-layouts');
 
-const indexRouter = require('./controllers/index.controller');
 const userRouter = require('./controllers/user.controller');
+const indexRouter = require('./controllers/index.controller');
 const productRouter = require('./controllers/product.controller');
 
 // Settings
 const PORT = 3500;
+const MONGODB_URL = 'mongodb://127.0.0.1:27017/final_project';
 
 // Express application
 const app = express();
@@ -20,7 +22,7 @@ main().then(() => {
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/final_project');
+    await mongoose.connect(MONGODB_URL);
 }
 
 /* App configurations */
@@ -28,19 +30,20 @@ async function main() {
 app.use('/public', express.static(path.join(__dirname, "public")));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// Express-ejs-layout
+app.use(expressLayouts);
+app.set('layout', './layouts/layout.ejs');
+
 // Body-parser
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-
-
 // Use of routers
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/product', productRouter);
-
 
 app.listen(PORT, () => {
     console.log(`App ready on port ${PORT}`);
