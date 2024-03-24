@@ -30,7 +30,15 @@ router.get('/dashboard', (req, res) => {
 
 router.get('/all', async (_, res) => {
     const usersList = await User.find({});
-    res.render('user.all.ejs', { data: usersList, table_title: "Users" });
+    res.render('user.all.ejs', { data: usersList, table_title: "Users", model: "user" });
+});
+
+router.get('/edit/:id', async (req, res) => {
+    const id = req.params.id;
+    // console.log(id);
+    const data = await User.findById(id).exec();
+    // console.log(data);
+    res.render('user.edit.ejs', { data: data, model_name: "user" });
 });
 
 

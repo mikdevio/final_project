@@ -1,0 +1,34 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100 ">
+    <div class="card w-50">
+        <div class="card-header">
+            <h5>
+                Edit <%= model_name %> : <%= data._doc._id %>
+            </h5>
+        </div>
+        <div class="card-body">
+            <form action="#">
+                <% Object.keys(data._doc).forEach(prop_name=> { %>
+                    <% if(prop_name !='_id' ) { %>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="f<%= prop_name %>"
+                                placeholder="<%= prop_name %>" value="<%= data[prop_name] %>">
+                            <label for="<%= prop_name %>">
+                                <%= prop_name %>
+                            </label>
+                        </div>
+                        <% } %>
+
+
+                            <% }); %>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                                    <a href="/<%= model_name %>/all" class="btn btn-danger mb-3">Cancel</a>
+                                </div>
+            </form>
+
+        </div>
+        <div class="card-footer">
+            <span>@mikdevio</span>
+        </div>
+    </div>
+</div>
