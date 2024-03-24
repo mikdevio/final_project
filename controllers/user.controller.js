@@ -8,6 +8,12 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+router.post('/login', (req, res) => {
+    const data = req.body;
+    console.log(data);
+    res.send(data);
+});
+
 router.get('/signup', (req, res) => {
     res.render('signup');
 });
@@ -15,13 +21,14 @@ router.get('/signup', (req, res) => {
 router.post('/signup', (req, res) => {
     const data = req.body;
     console.log(data);
+    res.send(data);
 });
 
 router.get('/dashboard', (req, res) => {
     res.render('dashboard');
 });
 
-router.get('/users', async (_, res) => {
+router.get('/all', async (_, res) => {
     const usersList = await User.find({});
     res.render('users', { data: usersList, table_title: "Users" });
 });

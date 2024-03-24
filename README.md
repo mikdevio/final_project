@@ -11,7 +11,7 @@ Copyright 2024 @mikdevio and contributors
 FinalProject is a software for managing the sales process, inventory control, and handling of customers and users for small and medium-sized stores and businesses.
 
 ### License
-DWSIM is licensed under the GNU General Public License (GPL) Version 3.
+FinalProject is licensed under the GNU General Public License (GPL) Version 3.
 
 ### Prerequisites
 
