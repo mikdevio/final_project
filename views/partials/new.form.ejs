@@ -2,11 +2,11 @@
     <div class="card w-50">
         <div class="card-header">
             <h5>
-                Edit <%= model_name %> : <%= data._id.value.toString()%>
+                New <%= model_name %>
             </h5>
         </div>
         <div class="card-body">
-            <form action="/<%= model_name %>/update/<%= data._id.value.toString()%>" method="post">
+            <form action="/<%= model_name %>/create" method="post">
                 <% let type = undefined;
                     Object.keys(data).forEach(prop_name=> { %>
                     <% if(prop_name !='_id' ) { %>

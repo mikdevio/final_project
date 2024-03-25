@@ -9,7 +9,7 @@
                         </h5>
                     </div>
                     <div class="col-4 gap-2 ps-0 ">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-plus-square"></i> Add</a>
+                        <a href="/<%= model %>/new" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Add</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Export</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Import</a>
                     </div>
@@ -65,9 +65,9 @@
                                     <% } }); %>
                                         <td>
                                             <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                            <a href="/<%= model %>/edit/<%= element._id %> "
+                                            <a href="/<%= model %>/edit/<%= element._id %>"
                                                 class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                            <a href="#" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                            <a onclick="return confirm('Are you sure?')" data-method="delete" href="/<%= model %>/delete/<%= element._id %>" rel="nofollow" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                         </td>
                         </tr>
                         <% }); %>

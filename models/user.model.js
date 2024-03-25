@@ -14,7 +14,7 @@ const userSchema = new Schema({
     role: String
 });
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
     let user = this;
 
     // If password is not modified or new got to next
