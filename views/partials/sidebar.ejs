@@ -1,0 +1,130 @@
+<aside id="sidebar">
+  <div class="d-flex">
+    <button class="toggle-btn" type="button">
+      <!-- <i class="bi bi-grid"></i> -->
+      <i class="bi bi-receipt-cutoff"></i>
+    </button>
+    <div class="sidebar-logo">
+      <a href="#">FinalProject</a>
+    </div>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="sidebar-item">
+      <a href="/user/dashboard" class="sidebar-link">
+        <i class="bi bi-ui-checks-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#personel"
+        aria-expanded="false"
+        aria-controls="personel"
+      >
+        <i class="bi bi-person"></i>
+        <span>Personel</span>
+      </a>
+      <ul
+        id="personel"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/user/all" class="sidebar-link">
+            <i class="bi bi-person"></i>User
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/customer/all" class="sidebar-link">
+            <i class="bi bi-people"></i>Customer
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/role/all" class="sidebar-link">
+            <i class="bi bi-bookmark-star"></i>Role
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#store"
+        aria-expanded="false"
+        aria-controls="store"
+      >
+        <i class="bi bi-boxes"></i>
+        <span>Store</span>
+      </a>
+      <ul
+        id="store"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="/product/all" class="sidebar-link">
+            <i class="bi bi-box-seam"></i>Product
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/category/all" class="sidebar-link">
+            <i class="bi bi-bookmark"></i>Category
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a
+        href="#"
+        class="sidebar-link collapsed has-dropdown"
+        data-bs-toggle="collapse"
+        data-bs-target="#documents"
+        aria-expanded="false"
+        aria-controls="store"
+      >
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+        <span>Documents</span>
+      </a>
+      <ul
+        id="documents"
+        class="sidebar-dropdown list-unstyled collapse"
+        data-bs-parent="#sidebar"
+      >
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link">
+            <i class="bi bi-box-seam"></i>Bill
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link">
+            <i class="bi bi-bookmark"></i>Sales
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
+      <a href="#" class="sidebar-link">
+        <i class="bi bi-chat-left-dots"></i>
+        <span>Notification</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a href="#" class="sidebar-link">
+        <i class="bi bi-gear"></i>
+        <span>Setting</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <a href="#" class="sidebar-link">
+      <i class="bi bi-box-arrow-left"></i>
+      <span>Logout</span>
+    </a>
+  </div>
+</aside>
+<!-- End Sidebar section -->

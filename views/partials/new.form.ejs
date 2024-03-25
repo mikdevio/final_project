@@ -1,43 +1,37 @@
-<div class="container d-flex justify-content-center align-items-center min-vh-100 ">
-    <div class="card w-50">
-        <div class="card-header">
-            <h5>
-                New <%= model_name %>
-            </h5>
-        </div>
-        <div class="card-body">
-            <form action="/<%= model_name %>/create" method="post">
-                <% let type = undefined;
-                    Object.keys(data).forEach(prop_name=> { %>
-                    <% if(prop_name !='_id' ) { %>
-                        <% if(data[prop_name].type == "String"){
-                            type='text';
-                        }
-                        else if(data[prop_name].type == "Number"){
-                            type="number"
-                        }
-                        %>
-
-                        <div class="form-floating mb-3">
-                            <input type="<%= type %>" class="form-control" id="<%= prop_name %>" name="<%= prop_name %>"
-                                placeholder="<%= prop_name %>" value="<%= data[prop_name].value %>">
-                            <label for="<%= prop_name %>">
-                                <%= prop_name %>
-                            </label>
-                        </div>
-                        <% } %>
-
-
-                            <% }); %>
-                                <div class="d-flex justify-content-end gap-2">
-                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
-                                    <a href="/<%= model_name %>/all" class="btn btn-danger mb-3">Cancel</a>
-                                </div>
-            </form>
-
-        </div>
-        <div class="card-footer">
-            <span>@mikdevio</span>
-        </div>
+<div class="container d-flex justify-content-center align-items-center h-100">
+  <div class="card w-50">
+    <div class="card-header">
+      <h5>New <%= model_name %></h5>
     </div>
+    <div class="card-body">
+      <form action="/<%= model_name %>/create" method="post">
+        <% let type = undefined; Object.keys(data).forEach(prop_name=> { %> <%
+        if(prop_name !='_id' ) { %> <% if(data[prop_name].type == "String"){
+        type='text'; } else if(data[prop_name].type == "Number"){ type="number"
+        } %>
+
+        <div class="form-floating mb-3">
+          <input
+            type="<%= type %>"
+            class="form-control"
+            id="<%= prop_name %>"
+            name="<%= prop_name %>"
+            placeholder="<%= prop_name %>"
+            value="<%= data[prop_name].value %>"
+          />
+          <label for="<%= prop_name %>"> <%= prop_name %> </label>
+        </div>
+        <% } %> <% }); %>
+        <div class="d-flex justify-content-end gap-2">
+          <button type="submit" class="btn btn-primary mb-3">Save</button>
+          <a href="/<%= model_name %>/all" class="btn btn-danger mb-3"
+            >Cancel</a
+          >
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <span>@mikdevio</span>
+    </div>
+  </div>
 </div>
