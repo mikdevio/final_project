@@ -4,7 +4,9 @@ const User = require("../models/user.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
 exports.getLogin = (req, res) => {
-  res.render("user.login.ejs");
+  res.render("user.login.ejs", {
+    layout: path.join(__dirname, "../views/layouts/main")
+  });
 };
 
 exports.postLogin = (req, res) => {
@@ -14,7 +16,9 @@ exports.postLogin = (req, res) => {
 };
 
 exports.getSignup = (req, res) => {
-  res.render("user.signup.ejs");
+  res.render("user.signup.ejs", {
+    layout: path.join(__dirname, "../views/layouts/main")
+  });
 };
 
 exports.postSignup = (req, res) => {

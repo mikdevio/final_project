@@ -34,7 +34,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 // Express-ejs-layout
 app.use(expressLayouts);
-app.set("layout", "./layouts/main.ejs");
 
 // Body-parser
 // parse application/x-www-form-urlencoded

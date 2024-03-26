@@ -4,29 +4,19 @@
       <div class="container">
         <div class="row justify-content-between">
           <div class="col">
-            <h5><%= table_title %></h5>
+            <h5>
+              <%= table_title %>
+            </h5>
           </div>
           <div class="col-4 gap-2 ps-0">
-            <a href="/<%= model %>/new" class="btn btn-primary btn-sm"
-              ><i class="bi bi-plus-circle"></i> Add</a
-            >
-            <a href="#" class="btn btn-primary btn-sm"
-              ><i class="bi bi-download"></i> Export</a
-            >
-            <a href="#" class="btn btn-primary btn-sm"
-              ><i class="bi bi-upload"></i> Import</a
-            >
+            <a href="/<%= model %>/new" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Add</a>
+            <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Export</a>
+            <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Import</a>
           </div>
           <div class="col-auto d-flex gap-2 pe-0">
             <div class="dropdown">
-              <a
-                class="btn btn-secondary btn-sm dropdown-toggle"
-                href="#"
-                role="button"
-                id="dropdownMenuLink"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 Filters
               </a>
 
@@ -39,18 +29,9 @@
               </ul>
             </div>
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control-sm"
-                placeholder="Search criterion"
-                aria-label="Recipient's username"
-                aria-describedby="button-addon2"
-              />
-              <button
-                class="btn btn-primary btn-sm"
-                type="button"
-                id="button-addon2"
-              >
+              <input type="text" class="form-control-sm" placeholder="Search criterion"
+                aria-label="Recipient's username" aria-describedby="button-addon2" />
+              <button class="btn btn-primary btn-sm" type="button" id="button-addon2">
                 Search
               </button>
             </div>
@@ -60,45 +41,40 @@
     </div>
 
     <div class="card-body">
-      <table class="table table-hover table-dark mb-0">
+      <table class="table table-hover table-dark mb-0" id="datatableGen">
         <thead>
           <tr>
             <th scope="column">#</th>
-            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(col_name
-            !="_id" ) { %>
-            <th scope="column"><%= col_name %></th>
-            <% } %> <% }); %>
-            <th scope="column">actions</th>
+            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(col_name !="_id" ) { %>
+                <th scope="column">
+                  <%= col_name %>
+                </th>
+                <% } %>
+                  <% }); %>
+                    <th scope="column">actions</th>
           </tr>
         </thead>
         <tbody>
           <% data.forEach((element, i)=> { %>
-          <tr>
-            <th scope="row"><%= i+1 %></th>
-            <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(col !="_id" )
-            { %>
-            <td><%= element[col] %></td>
-            <% } }); %>
-            <td>
-              <a href="#" class="btn btn-primary btn-sm"
-                ><i class="bi bi-eye"></i
-              ></a>
-              <a
-                href="/<%= model %>/edit/<%= element._id %>"
-                class="btn btn-success btn-sm"
-                ><i class="bi bi-pencil-square"></i
-              ></a>
-              <a
-                onclick="return confirm('Are you sure?')"
-                data-method="delete"
-                href="/<%= model %>/delete/<%= element._id %>"
-                rel="nofollow"
-                class="btn btn-danger btn-sm"
-                ><i class="bi bi-trash"></i
-              ></a>
-            </td>
-          </tr>
-          <% }); %>
+            <tr>
+              <th scope="row">
+                <%= i+1 %>
+              </th>
+              <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(col !="_id" ) { %>
+                  <td>
+                    <%= element[col] %>
+                  </td>
+                  <% } }); %>
+                    <td>
+                      <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                      <a href="/<%= model %>/edit/<%= element._id %>" class="btn btn-success btn-sm"><i
+                          class="bi bi-pencil-square"></i></a>
+                      <a onclick="return confirm('Are you sure?')" data-method="delete"
+                        href="/<%= model %>/delete/<%= element._id %>" rel="nofollow" class="btn btn-danger btn-sm"><i
+                          class="bi bi-trash"></i></a>
+                    </td>
+            </tr>
+            <% }); %>
         </tbody>
       </table>
     </div>

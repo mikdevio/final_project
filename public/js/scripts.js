@@ -67,6 +67,9 @@ const graphData = {
   }]
 };
 
+// Datatable definition
+let table = new DataTable('#datatableGen');
+
 drawGraph('line', "chart-1", graphData, graphOpt);
 drawGraph('doughnut', "chart-2", graphData, graphOpt);
 drawGraph('bar', "chart-3", graphData, graphOpt);
