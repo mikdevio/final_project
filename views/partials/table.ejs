@@ -3,49 +3,26 @@
     <div class="card-header">
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col">
+          <div class="col-2">
             <h5>
               <%= table_title %>
             </h5>
           </div>
-          <div class="col-4 gap-2 ps-0">
+          <div class="col-auto gap-2 pe-0">
             <a href="/<%= model %>/new" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Add</a>
             <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Export</a>
             <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Import</a>
-          </div>
-          <div class="col-auto d-flex gap-2 pe-0">
-            <div class="dropdown">
-              <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Filters
-              </a>
-
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </div>
-            <div class="input-group">
-              <input type="text" class="form-control-sm" placeholder="Search criterion"
-                aria-label="Recipient's username" aria-describedby="button-addon2" />
-              <button class="btn btn-primary btn-sm" type="button" id="button-addon2">
-                Search
-              </button>
-            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="card-body">
-      <table class="table table-hover table-dark mb-0" id="datatableGen">
+      <table class="table table-hover table-sm mb-0" id="datatableGen">
         <thead>
           <tr>
             <th scope="column">#</th>
-            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(col_name !="_id" ) { %>
+            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(!["_id", "password" ].includes(col_name)) { %>
                 <th scope="column">
                   <%= col_name %>
                 </th>
@@ -60,7 +37,7 @@
               <th scope="row">
                 <%= i+1 %>
               </th>
-              <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(col !="_id" ) { %>
+              <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(!["_id", "password" ].includes(col) ) { %>
                   <td>
                     <%= element[col] %>
                   </td>
@@ -79,20 +56,10 @@
       </table>
     </div>
 
-    <div class="card-footer pb-0">
+    <div class="card-footer">
       <div class="row justify-content-end">
         <div class="col-auto">
-          <nav aria-label="table_pages">
-            <ul class="pagination mb-2">
-              <li class="page-item">
-                <a class="page-link" href="#">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
+          <span class="text-secondary ">@mikdevio</span>
         </div>
       </div>
     </div>
