@@ -5,12 +5,12 @@ const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
 const settings = require("./settings");
-const userRouter = require("./controllers/user.controller");
-const indexRouter = require("./controllers/index.controller");
-const productRouter = require("./controllers/product.controller");
-const roleRouter = require("./controllers/role.controller");
-const categoryRouter = require("./controllers/category.controller");
-const customerRouter = require("./controllers/customer.controller");
+const roleRouter = require("./routers/role.router");
+const userRouter = require("./routers/user.router");
+const indexRouter = require("./routers/index.router");
+const productRouter = require("./routers/product.router");
+const categoryRouter = require("./routers/category.router");
+const customerRouter = require("./routers/customer.router");
 
 // Express application
 const app = express();

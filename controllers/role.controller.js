@@ -1,12 +1,9 @@
 const path = require("path");
-const express = require("express");
 
 const Role = require("../models/role.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
-const router = express.Router();
-
-router.get("/all", async (req, res) => {
+exports.getAll = async (req, res) => {
   const rolesList = await Role.find({});
   res.render("partials/table.ejs", {
     data: rolesList,
@@ -14,9 +11,9 @@ router.get("/all", async (req, res) => {
     model: "role",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/edit/:id", async (req, res) => {
+exports.editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Role.findById(id).exec();
   let fields = dataFilledFromModel(Role, data);
@@ -26,18 +23,18 @@ router.get("/edit/:id", async (req, res) => {
     model_name: "role",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/new", (req, res) => {
+exports.newItem = (req, res) => {
   let fields = dataEmptyFromModel(Role);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "role",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.post("/create", async (req, res) => {
+exports.createItem = async (req, res) => {
   const newCustomer = new Role({
     name: req.body.name,
     description: req.body.description,
@@ -50,9 +47,9 @@ router.post("/create", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-router.post("/update/:id", async (req, res) => {
+exports.updateItem = async (req, res) => {
   const customerId = req.params.id;
   try {
     await Customer.findOneAndUpdate(
@@ -67,9 +64,9 @@ router.post("/update/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+};
 
-router.get("/delete/:id", async (req, res) => {
+exports.deleteItem = async (req, res) => {
   const roleId = req.params.id;
   try {
     await Role.findOneAndDelete({ _id: roleId });
@@ -77,6 +74,4 @@ router.get("/delete/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-module.exports = router;
+};

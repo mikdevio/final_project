@@ -6,7 +6,7 @@ const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
 const router = express.Router();
 
-router.get("/all", async (req, res) => {
+exports.getAll = async (req, res) => {
   const productsList = await Product.find({});
   res.render("partials/table.ejs", {
     data: productsList,
@@ -14,9 +14,9 @@ router.get("/all", async (req, res) => {
     model: "product",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/edit/:id", async (req, res) => {
+exports.editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Product.findById(id).exec();
   let fields = dataFilledFromModel(Product, data);
@@ -25,18 +25,18 @@ router.get("/edit/:id", async (req, res) => {
     model_name: "product",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/new", (req, res) => {
+exports.newItem = (req, res) => {
   let fields = dataEmptyFromModel(Product);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "product",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.post("/create", async (req, res) => {
+exports.createItem = async (req, res) => {
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -45,7 +45,7 @@ router.post("/create", async (req, res) => {
     discount: req.body.discount,
     description: req.body.description,
     quantity: req.body.quantity,
-  });
+  })
 
   try {
     const result = await newProduct.save();
@@ -53,9 +53,9 @@ router.post("/create", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-router.post("/update/:id", async (req, res) => {
+exports.updateItem = async (req, res) => {
   const productId = req.params.id;
 
   try {
@@ -75,9 +75,9 @@ router.post("/update/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+};
 
-router.get("/delete/:id", async (req, res) => {
+exports.deleteItem = async (req, res) => {
   const productId = req.params.id;
   try {
     await Product.findOneAndDelete({ _id: productId });
@@ -85,6 +85,4 @@ router.get("/delete/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-module.exports = router;
+};

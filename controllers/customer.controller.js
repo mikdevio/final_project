@@ -1,12 +1,9 @@
 const path = require("path");
-const express = require("express");
 
 const Customer = require("../models/customer.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
-const router = express.Router();
-
-router.get("/all", async (req, res) => {
+exports.getAll = async (req, res) => {
   const customerList = await Customer.find({});
   res.render("partials/table.ejs", {
     data: customerList,
@@ -14,9 +11,9 @@ router.get("/all", async (req, res) => {
     model: "customer",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/edit/:id", async (req, res) => {
+exports.editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Customer.findById(id).exec();
   let fields = dataFilledFromModel(Customer, data);
@@ -25,18 +22,18 @@ router.get("/edit/:id", async (req, res) => {
     model_name: "customer",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/new", (req, res) => {
+exports.newItem = (req, res) => {
   let fields = dataEmptyFromModel(Customer);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "customer",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.post("/create", async (req, res) => {
+exports.createItem = async (req, res) => {
   const newCustomer = new Customer({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -52,9 +49,9 @@ router.post("/create", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-router.post("/update/:id", async (req, res) => {
+exports.updateItem = async (req, res) => {
   const customerId = req.params.id;
   try {
     await Customer.findOneAndUpdate(
@@ -72,9 +69,9 @@ router.post("/update/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+};
 
-router.get("/delete/:id", async (req, res) => {
+exports.deleteItem = async (req, res) => {
   const customerId = req.params.id;
   try {
     await Customer.findOneAndDelete({ _id: customerId });
@@ -82,6 +79,4 @@ router.get("/delete/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-module.exports = router;
+};

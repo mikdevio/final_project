@@ -1,38 +1,35 @@
 const path = require("path");
-const express = require("express");
 
 const User = require("../models/user.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
-const router = express.Router();
-
-router.get("/login", (req, res) => {
+exports.getLogin = (req, res) => {
   res.render("user.login.ejs");
-});
+};
 
-router.post("/login", (req, res) => {
+exports.postLogin = (req, res) => {
   const data = req.body;
   console.log(data);
   res.send(data);
-});
+};
 
-router.get("/signup", (req, res) => {
+exports.getSignup = (req, res) => {
   res.render("user.signup.ejs");
-});
+};
 
-router.post("/signup", (req, res) => {
+exports.postSignup = (req, res) => {
   const data = req.body;
   console.log(data);
   res.send(data);
-});
+};
 
-router.get("/dashboard", (req, res) => {
+exports.getDashboard = (req, res) => {
   res.render("user.dashboard.ejs", {
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/all", async (_, res) => {
+exports.getAll = async (_, res) => {
   const usersList = await User.find({});
   res.render("partials/table.ejs", {
     data: usersList,
@@ -40,9 +37,9 @@ router.get("/all", async (_, res) => {
     model: "user",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/edit/:id", async (req, res) => {
+exports.editItem = async (req, res) => {
   const id = req.params.id;
   const data = await User.findById(id).exec();
   let fields = dataFilledFromModel(User, data);
@@ -52,18 +49,18 @@ router.get("/edit/:id", async (req, res) => {
     model_name: "user",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.get("/new", (req, res) => {
+exports.newItem = (req, res) => {
   let fields = dataEmptyFromModel(User);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "user",
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
-});
+};
 
-router.post("/create", async (req, res) => {
+exports.createItem = async (req, res) => {
   const newUser = new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -78,9 +75,9 @@ router.post("/create", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+};
 
-router.post("/update/:id", async (req, res) => {
+exports.uptadeItem = async (req, res) => {
   const userId = req.params.id;
   try {
     await User.findOneAndUpdate(
@@ -97,9 +94,9 @@ router.post("/update/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+};
 
-router.get("/delete/:id", async (req, res) => {
+exports.deleteItem = async (req, res) => {
   const userId = req.params.id;
   try {
     await User.findOneAndDelete({ _id: userId });
@@ -107,6 +104,4 @@ router.get("/delete/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-module.exports = router;
+};
