@@ -1,97 +1,188 @@
-<div class="container-fluid">
-  <div class="mb-3">
-    <h4 class="fw-bold fs-4 mb-3">Dashboard</h4>
+<div class="container-fluid mb-3">
+
+  <div class="container-fluid mt-3 mb-3">
     <div class="row">
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <div class="card-body py-4">
-            <h5 class="mb-2 fw-bold">Category 1</h5>
-            <p class="mb-2 fw-bold">Result 1</p>
-            <div class="mb-0">
-              <span class="badge text-bg-success me-2"> Result 2 </span>
-              <span class="fw-bold"> Desription </span>
+      <h4 class="fw-bold fs-4">Dashboard</h4>
+    </div>
+    <div class="row">
+      <div class="container-fluid d-flex p-0 justify-content-between gap-2">
+        <% for (let i=0; i <=6; i++) { %>
+          <div class="card w-100">
+            <div class="card-body py-4">
+              <h5 class="mb-2 fw-bold">Category <%= i %>
+              </h5>
+              <p class="mb-2 fw-bold">Result 1</p>
+              <div class="mb-0">
+                <span class="badge text-bg-success me-2"> Result 2 </span>
+                <span class="fw-bold"> Desription </span>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <div class="card-body py-4">
-            <h5 class="mb-2 fw-bold">Category 2</h5>
-            <p class="mb-2 fw-bold">Result 1</p>
-            <div class="mb-0">
-              <span class="badge text-bg-success me-2"> Result 2 </span>
-              <span class="fw-bold"> Description </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <div class="card-body py-4">
-            <h5 class="mb-2 fw-bold">Category 3</h5>
-            <p class="mb-2 fw-bold">Result 1</p>
-            <div class="mb-0">
-              <span class="badge text-bg-danger me-2"> Result 2 </span>
-              <span class="fw-bold"> Description </span>
-            </div>
-          </div>
-        </div>
+          <% } %>
+
       </div>
     </div>
+  </div>
 
-    <h4 class="fw-bold fs-4 my-3">Chart of results</h4>
-    <div class="row">
-      <div class="col-12 col-md-4">
+
+  <div class="container-fluid d-flex mt-3 p-0 justify-content-between ">
+    <div class="card">
+      <div class="card-header">
+        <span class="fw-bold">Chart of results</span>
+      </div>
+      <div class="card-body">
         <div class="card chart-container">
           <canvas id="chart-1"></canvas>
         </div>
       </div>
-      <div class="col-12 col-md-4">
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="fw-bold">Chart of results</span>
+      </div>
+      <div class="card-body">
         <div class="card chart-container">
           <canvas id="chart-2"></canvas>
         </div>
       </div>
-      <div class="col-12 col-md-4">
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="fw-bold">Chart of results</span>
+      </div>
+      <div class="card-body">
         <div class="card chart-container">
           <canvas id="chart-3"></canvas>
         </div>
       </div>
     </div>
+  </div>
 
-    <h4 class="fw-bold fs-4 my-3">Table of results</h4>
-    <div class="row">
-      <div class="col-12">
-        <table class="table table-sm">
+
+  <div class="container-fluid mt-3 p-0">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="fw-bold">Table of results</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-sm" id="dashboardTable">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th>Producto</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Precio</th>
+              <th>Disponibilidad</th>
+              <th>Enlace</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>Computadora portátil</td>
+              <td>Marca A</td>
+              <td>Modelo 1</td>
+              <td>$999</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
+              <td>Teclado</td>
+              <td>Marca B</td>
+              <td>Modelo 2</td>
+              <td>$49</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
             </tr>
             <tr>
               <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">7</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">8</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">9</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">10</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
+            </tr>
+            <tr>
+              <th scope="row">11</th>
+              <td>Ratón</td>
+              <td>Marca C</td>
+              <td>Modelo 3</td>
+              <td>$29</td>
+              <td>Disponible</td>
+              <td><a href="#">Enlace</a></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
 </div>

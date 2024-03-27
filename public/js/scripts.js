@@ -13,35 +13,37 @@
 
 // Disabling form submissions if there are invalid fields
 (() => {
-  'use strict'
+  "use strict";
 
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+  var forms = document.querySelectorAll(".needs-validation");
 
   // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
         if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+          event.preventDefault();
+          event.stopPropagation();
         }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
 
 // Charts rendering
 let drawGraph = (typeOfGraph, canvasId, dataObject, graphOptions) => {
-
   const canvas = document.getElementById(canvasId);
 
   if (canvas) {
-    const myChart = new Chart(canvas.getContext('2d'), {
+    const myChart = new Chart(canvas.getContext("2d"), {
       type: typeOfGraph,
       data: dataObject,
-      options: graphOptions
+      options: graphOptions,
     });
   }
 };
@@ -49,27 +51,43 @@ let drawGraph = (typeOfGraph, canvasId, dataObject, graphOptions) => {
 // Dashboard preliminary graphs
 const graphOpt = {
   scales: {
-    yAxes: [{
-      ticks: {
-        beginAtZero: true,
-      }
-    }]
-  }
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
 };
 
 const graphData = {
-  labels: ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
-  datasets: [{
-    label: "last week",
-    backgroundColor: "rgba(164, 198, 247, 1)",
-    borderColor: "rgb(47,128,237)",
-    data: [3000, 4200, 2000, 5100, 6420, 8520, 7352],
-  }]
+  labels: [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ],
+  datasets: [
+    {
+      label: "last week",
+      backgroundColor: "rgba(164, 198, 247, 1)",
+      borderColor: "rgb(47,128,237)",
+      data: [3000, 4200, 2000, 5100, 6420, 8520, 7352],
+    },
+  ],
 };
 
 // Datatable definition
-let table = new DataTable('#datatableGen');
+let table = new DataTable("#datatableGen");
+table.responsive = true;
 
-drawGraph('line', "chart-1", graphData, graphOpt);
-drawGraph('doughnut', "chart-2", graphData, graphOpt);
-drawGraph('bar', "chart-3", graphData, graphOpt);
+let table_dashboard = new DataTable("#dashboardTable");
+table_dashboard.responsive = true;
+
+drawGraph("line", "chart-1", graphData, graphOpt);
+drawGraph("doughnut", "chart-2", graphData, graphOpt);
+drawGraph("bar", "chart-3", graphData, graphOpt);
