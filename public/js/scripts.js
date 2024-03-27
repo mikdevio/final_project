@@ -36,7 +36,7 @@
 })();
 
 // Charts rendering
-let drawGraph = (typeOfGraph, canvasId, dataObject, graphOptions) => {
+const drawGraph = (typeOfGraph, canvasId, dataObject, graphOptions) => {
   const canvas = document.getElementById(canvasId);
 
   if (canvas) {
@@ -45,6 +45,8 @@ let drawGraph = (typeOfGraph, canvasId, dataObject, graphOptions) => {
       data: dataObject,
       options: graphOptions,
     });
+
+    return myChart;
   }
 };
 
@@ -88,6 +90,16 @@ table.responsive = true;
 let table_dashboard = new DataTable("#dashboardTable");
 table_dashboard.responsive = true;
 
-drawGraph("line", "chart-1", graphData, graphOpt);
-drawGraph("doughnut", "chart-2", graphData, graphOpt);
-drawGraph("bar", "chart-3", graphData, graphOpt);
+let charts = [];
+
+charts.push(drawGraph("line", "chart-0", graphData, graphOpt));
+charts.push(drawGraph("bubble", "chart-1", graphData, graphOpt));
+charts.push(drawGraph("scatter", "chart-2", graphData, graphOpt));
+charts.push(drawGraph("bar", "chart-3", graphData, graphOpt));
+
+window.addEventListener("resize", () => {
+  charts.map((chart) => {
+    chart.resize();
+    console.log(chart);
+  });
+});

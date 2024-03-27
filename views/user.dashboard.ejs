@@ -8,9 +8,11 @@
       <div class="container-fluid d-flex p-0 justify-content-between gap-2">
         <% for (let i=0; i <=6; i++) { %>
           <div class="card w-100">
+            <div class="card-header">
+              <span class="fw-bold">Category <%= i %>
+              </span>
+            </div>
             <div class="card-body py-4">
-              <h5 class="mb-2 fw-bold">Category <%= i %>
-              </h5>
               <p class="mb-2 fw-bold">Result 1</p>
               <div class="mb-0">
                 <span class="badge text-bg-success me-2"> Result 2 </span>
@@ -19,45 +21,15 @@
             </div>
           </div>
           <% } %>
-
       </div>
     </div>
   </div>
 
 
-  <div class="container-fluid d-flex mt-3 p-0 justify-content-between ">
-    <div class="card">
-      <div class="card-header">
-        <span class="fw-bold">Chart of results</span>
-      </div>
-      <div class="card-body">
-        <div class="card chart-container">
-          <canvas id="chart-1"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="fw-bold">Chart of results</span>
-      </div>
-      <div class="card-body">
-        <div class="card chart-container">
-          <canvas id="chart-2"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="fw-bold">Chart of results</span>
-      </div>
-      <div class="card-body">
-        <div class="card chart-container">
-          <canvas id="chart-3"></canvas>
-        </div>
-      </div>
-    </div>
+  <div class="container-fluid d-flex mt-3 p-0 justify-content-between gap-2 ">
+    <%for (let i=0; i < 4; i++) { %>
+      <%- include("partials/chart", {i:i}) %>
+        <% } %>
   </div>
 
 
