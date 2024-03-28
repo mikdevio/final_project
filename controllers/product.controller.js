@@ -4,8 +4,6 @@ const express = require("express");
 const Product = require("../models/product.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
-const router = express.Router();
-
 exports.getAll = async (req, res) => {
   const productsList = await Product.find({});
   res.render("partials/table.ejs", {
@@ -45,7 +43,7 @@ exports.createItem = async (req, res) => {
     discount: req.body.discount,
     description: req.body.description,
     quantity: req.body.quantity,
-  })
+  });
 
   try {
     const result = await newProduct.save();

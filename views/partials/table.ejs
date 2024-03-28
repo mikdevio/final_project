@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center align-items-start h-100 mt-3">
+<div class="container-fluid d-flex justify-content-center align-items-start h-100 mt-3">
   <div class="card w-100">
     <div class="card-header">
       <div class="container-fluid">
@@ -22,7 +22,8 @@
         <thead>
           <tr>
             <th scope="column">#</th>
-            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(!["_id", "password" ].includes(col_name)) { %>
+            <% Object.keys(data[0]._doc).forEach(col_name=> { %> <% if(!["_id", "password" , "__v" ].includes(col_name))
+                { %>
                 <th scope="column">
                   <%= col_name %>
                 </th>
@@ -37,7 +38,7 @@
               <th scope="row">
                 <%= i+1 %>
               </th>
-              <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(!["_id", "password" ].includes(col) ) { %>
+              <% Object.keys(data[0]._doc).forEach(col=> { %> <% if(!["_id", "password" , "__v" ].includes(col) ) { %>
                   <td>
                     <%= element[col] %>
                   </td>

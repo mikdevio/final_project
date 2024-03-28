@@ -1,0 +1,142 @@
+<div class="container-fluid h-100 gap-2 mt-3 mb-3">
+    <div class="row justify-content-between h-100 ">
+        <div class="col-9">
+            <div class="card h-100 ">
+                <div class="card-header">
+                    <div class="container-fluid m-0 p-0">
+                        <div class="row justify-content-between">
+                            <div class="col-2">
+                                <span class="fw-semibold fs-5 ">Storage</span>
+                            </div>
+                            <div class="col-5">
+                                <form action="#" class="d-none d-sm-inline-block w-100 ">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control" placeholder="Product name"
+                                            arial-label="" aria-describedby="button-search" />
+                                        <button class="btn btn-primary" type="button" id="button-search">
+                                            Search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid m-0 p-0 h-100 d-flex flex-column ">
+                        <div class="row flex-grow-0">
+                            <div class="container-fluid d-flex justify-content-between gap-2">
+                                <% for (let i=1; i <=5; i++) { %>
+                                    <div class="card w-100 text-center mt-1 mb-1">
+                                        <div class="card-body p-2">
+                                            <span class="fw-bold"><i class="bi bi-tag"></i> Category <%= i %>
+                                            </span>
+                                            <span class="badge bg-primary ">
+                                                <%- i*20+i %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="row flex-grow-1">
+                            <div
+                                class="container-fluid m-0 h-100 d-flex justify-content-between flex-wrap overflow-y-scroll gap-2 ">
+                                <% for (let j=0; j < 24; j++) { %>
+                                    <div class=" card" style="height: 150px;">
+                                        <img src="#" class="card-img-top bg-body-secondary " alt="image"
+                                            style="width: 100px; height: 100px;">
+                                        <div class="card-body">
+                                            Product <%- j %>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <div class="container-fluid m-0 p-0">
+                        <div class="row justify-content-between">
+                            <div class="col-5">
+                                <span class="fw-semibold fs-5 ">Cart</span>
+                            </div>
+                            <div class="col-5 d-flex justify-content-end ">
+                                <a href="#" class="btn btn-danger btn-sm">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid m-0 p-0 h-100 d-flex flex-column ">
+                        <div class="row flex-grow-1 ">
+                            <div class="col-12 ">
+                                <table class="table table-sm text-center ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i=1; i < 8; i++) { %>
+                                            <tr>
+                                                <th scope="row"><%- i%></th>
+                                                <td>Product<%- i %></td>
+                                                <td>4</td>
+                                                <td>$ <%- 12.5+i %></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row flex-grow-0">
+                            <div class="container-fluid h-100 d-flex flex-column ">
+                                <div class="row flex-grow-1 ">
+                                    <div class="col">Subtotal</div>
+                                    <div class="col text-end ">$2000.00</div>
+                                </div>
+                                <div class="row flex-grow-1 ">
+                                    <div class="col">Tax</div>
+                                    <div class="col text-end ">$125.15</div>
+                                </div>
+                                <div class="row flex-grow-1 ">
+                                    <div class="col">Total</div>
+                                    <div class="col text-end "> <span class="text-success fw-semibold ">$2125.15</span>
+                                    </div>
+                                </div>
+                                <div class=" row flex-grow-1 ">
+                                    <div class=" col">Payment mode </div>
+                                    <div class="col text-end"> <span class="text-danger fw-semibold ">Cash</span>
+                                    </div>
+                                </div>
+                                <div class=" row flex-grow-1 mt-2">
+                                    <div class=" col-12 d-grid">
+                                        <a href="#" class="btn btn-primary  btn-">Pay</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

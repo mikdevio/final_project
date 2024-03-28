@@ -11,6 +11,9 @@ const indexRouter = require("./routers/index.router");
 const productRouter = require("./routers/product.router");
 const categoryRouter = require("./routers/category.router");
 const customerRouter = require("./routers/customer.router");
+const saleRouter = require("./routers/sale.router");
+
+const { initializeDB } = require("./utils/db");
 
 // Express application
 const app = express();
@@ -19,6 +22,7 @@ const app = express();
 main()
   .then(() => {
     console.log("MongoDB connection Successfully");
+    // initializeDB();
   })
   .catch((err) => console.log(err));
 
@@ -48,6 +52,7 @@ app.use("/product", productRouter);
 app.use("/role", roleRouter);
 app.use("/category", categoryRouter);
 app.use("/customer", customerRouter);
+app.use("/sale", saleRouter);
 
 app.listen(settings.PORT, () => {
   console.log(`App ready on port ${settings.PORT}`);
