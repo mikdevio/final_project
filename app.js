@@ -5,13 +5,7 @@ const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
 const settings = require("./settings");
-const roleRouter = require("./routers/role.router");
-const userRouter = require("./routers/user.router");
 const indexRouter = require("./routers/index.router");
-const productRouter = require("./routers/product.router");
-const categoryRouter = require("./routers/category.router");
-const customerRouter = require("./routers/customer.router");
-const saleRouter = require("./routers/sale.router");
 
 const { initializeDB } = require("./utils/db");
 
@@ -47,12 +41,6 @@ app.use(bodyParser.json());
 
 // Use of routers
 app.use("/", indexRouter);
-app.use("/user", userRouter);
-app.use("/product", productRouter);
-app.use("/role", roleRouter);
-app.use("/category", categoryRouter);
-app.use("/customer", customerRouter);
-app.use("/sale", saleRouter);
 
 app.listen(settings.PORT, () => {
   console.log(`App ready on port ${settings.PORT}`);
