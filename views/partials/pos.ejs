@@ -1,6 +1,6 @@
 <div class="container-fluid h-100 gap-2 mt-3 mb-3">
     <div class="row justify-content-between h-100 ">
-        <div class="col-8">
+        <div class="col-md-8 col-xxl-9">
             <div class="card h-100 ">
                 <div class="card-header">
                     <div class="container-fluid m-0 p-0">
@@ -27,56 +27,57 @@
                     <div class="container-fluid m-0 p-0 h-100 d-flex flex-column ">
                         <div class="row flex-grow-0">
                             <div class="container-fluid d-flex justify-content-between gap-2">
-                                <% for (let i=1; i <=5; i++) { %>
-                                    <div class="card w-100 text-center mt-1 mb-1">
-                                        <div class="card-body p-2">
-                                            <span class="fw-bold"><i class="bi bi-tag"></i> Category <%= i %>
+
+                                <% categories.forEach(category => { %>
+                                    <div class="card w-100 text-center mt-1 mb-1 card-hovered p-0">
+                                        <div class="card-body p-1 m-0">
+                                            <span class="fw-bold" style="font-size: 12px;"><i class="bi bi-tag"></i>  <%= category.name %>
                                             </span>
-                                            <span class="badge bg-primary ">
-                                                <%- i*20+i %>
+                                            <span class="badge bg-primary " style="font-size: 10px;">
+                                                <%- 20 %>
                                             </span>
                                         </div>
                                     </div>
-                                    <% } %>
+                                <% }); %>
                             </div>
                         </div>
                         <div class="row flex-grow-1">
                             <div
-                                class="container-fluid m-0 h-100 d-flex justify-content-start flex-wrap overflow-y-scroll gap-1 ">
-                                <% for (let j=0; j < 18; j++) { %>
-                                    <div class=" card " style="height: auto; width: auto;">
-                                        <img src="#" class="card-img-top bg-body-secondary " alt="image"
-                                            style="width: auto; height: 100px;">
+                                class="container-fluid m-0 h-100 d-flex justify-content-start align-content-start flex-wrap overflow-y-scroll gap-2 mt-2 pt-2">
+                                <% products.forEach(product => { %>
+                                    <div class=" card card-hovered" style="height: auto; width: 150px;">
+                                        
+                                        <img src="#" class="card-img-top bg-body-secondary" alt="image"
+                                        style="width: auto; height: 150px;">
+                                        <span class="badge notify-badge">
+                                            -<%- product.discount * 100 %>%
+                                        </span>
+                                        <span class="badge price-badge">
+                                            <%- product.price %> USD
+                                        </span>
+                                        </img>  
                                         <div class="card-body p-1">
-                                            <div class="container">
-                                                <div class="row justify-content-center">
-                                                    Product <%- j %>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a href="#" class="btn btn-primary btn-sm">
-                                                            <i class="bi bi-eye"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col">
-                                                        <a href="#" class="btn btn-success btn-sm">
-                                                            <i class="bi bi-plus"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <div class="span" style="font-size: 12px;">
+                                                <%- product.name %>
                                             </div>
-
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between p-1">
+                                            <a href="#" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-success btn-sm" id="<%- product._id %>">
+                                                <i class="bi bi-plus"></i>
+                                            </a>
                                         </div>
                                     </div>
-
-                                    <% } %>
+                                <% }); %>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4 col-xxl-3">
             <div class="card h-100">
                 <div class="card-header">
                     <div class="container-fluid m-0 p-0">
@@ -84,7 +85,8 @@
                             <div class="col-5">
                                 <span class="fw-semibold fs-5 ">Cart</span>
                             </div>
-                            <div class="col-5 d-flex justify-content-end ">
+                            <div class="col-5 d-flex justify-content-end gap-2">
+                                <a href="#" class="btn btn-primary btn-sm">Customer</a>
                                 <a href="#" class="btn btn-danger btn-sm">Cancel</a>
                             </div>
                         </div>
@@ -94,7 +96,7 @@
                     <div class="container-fluid m-0 p-0 h-100 d-flex flex-column ">
                         <div class="row flex-grow-1 ">
                             <div class="col-12 ">
-                                <table class="table table-sm text-center">
+                                <table class="table table-sm text-center" style="font-size: 12px;" id="listProductTable"">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -105,22 +107,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for (let i=1; i < 8; i++) { %>
-                                            <tr>
-                                                <th scope="row"><%- i%></th>
-                                                <td>Product<%- i %></td>
-                                                <td>
-                                                    <input class="form-control form-control-sm" type="number" value="0"
-                                                        style="width: 80px;">
-                                                </td>
-                                                <td>$ <%- 12.5+i %></td>
-                                                <td>
-                                                    <a href="#" class="btn btn-danger btn-sm">
-                                                        <i class="bi bi-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <% } %>
+                                    <!-- List of products defined dynamically -->
                                     </tbody>
                                 </table>
                             </div>
@@ -160,3 +147,57 @@
         </div>
     </div>
 </div>
+
+<script>
+     // POS logic
+    let posProductList = [];
+
+    function updateList() {
+
+        if(posProductList.length > 0) {
+
+            const tableBody = listProductTable.getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = "";
+
+            posProductList.forEach((product, i) => {                
+                const tr = document.createElement("tr");
+                const th_1 = document.createElement("th");
+                const td_2 = document.createElement("td");
+                const td_3 = document.createElement("td");
+                const td_4 = document.createElement("td");
+                const td_5 = document.createElement("td");
+                
+                th_1.innerText = i;
+                th_1.scope = "row";
+                td_2.innerText = product.name;
+                td_3.innerHTML = '<input class="form-control form-control-sm" type="number" value="1" style="width: 80px;">';
+                td_4.innerText = product.price;
+                td_5.innerHTML = '<a href="#" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a>';
+
+                tr.appendChild(th_1);
+                tr.appendChild(td_2);
+                tr.appendChild(td_3);
+                tr.appendChild(td_4);
+                tr.appendChild(td_5);
+
+                tableBody.append(tr);
+            });
+        };
+    }
+
+    (() => {
+            const productList = <%- JSON.stringify(products) %>;
+
+            const btnsAddProduct = document.querySelectorAll("a.btn.btn-success.btn-sm");
+
+            btnsAddProduct.forEach(btn => {
+                btn.addEventListener('click', (e)=>{
+                    let addedProduct = productList.find(product => product._id == btn.id);
+                    posProductList.push(addedProduct);
+                    updateList();
+                    console.log(btn, addedProduct);
+                    console.log(posProductList);
+                });
+            });
+        })();
+</script>

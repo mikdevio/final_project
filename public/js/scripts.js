@@ -27,7 +27,6 @@
           event.preventDefault();
           event.stopPropagation();
         }
-
         form.classList.add("was-validated");
       },
       false
@@ -96,10 +95,3 @@ charts.push(drawGraph("line", "chart-0", graphData, graphOpt));
 charts.push(drawGraph("bubble", "chart-1", graphData, graphOpt));
 charts.push(drawGraph("scatter", "chart-2", graphData, graphOpt));
 charts.push(drawGraph("bar", "chart-3", graphData, graphOpt));
-
-window.addEventListener("resize", () => {
-  charts.map((chart) => {
-    chart.resize();
-    console.log(chart);
-  });
-});

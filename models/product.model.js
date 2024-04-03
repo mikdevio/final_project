@@ -10,6 +10,10 @@ const productSchema = new Schema(
     discount: Number,
     description: String,
     quantity: Number,
+    img: {
+      data: Buffer,
+      contentType: String
+    }
   },
   { timestamps: true }
 );

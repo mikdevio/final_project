@@ -1,5 +1,9 @@
+const path = require("path");
 const mongoose = require("mongoose");
+const settings = require("../settings");
+
 const Schema = mongoose.Schema;
+
 
 const customerSchema = new Schema(
   {
@@ -9,6 +13,10 @@ const customerSchema = new Schema(
     email: String,
     phone: String,
     password: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    }
   },
   { timestamps: true }
 );

@@ -4,10 +4,16 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 
+const env = require("dotenv");
+
 const settings = require("./settings");
 const indexRouter = require("./routers/index.router");
 
 const { initializeDB } = require("./utils/db");
+
+
+// Set env config vars
+env.config();
 
 // Express application
 const app = express();
@@ -21,7 +27,7 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(settings.MONGODB_URL);
+  await mongoose.connect(process.env.MONGODB_URL);
 }
 
 /* App configurations */
@@ -42,6 +48,6 @@ app.use(bodyParser.json());
 // Use of routers
 app.use("/", indexRouter);
 
-app.listen(settings.PORT, () => {
+app.listen(process.env.PORT || "3000", () => {
   console.log(`App ready on port ${settings.PORT}`);
 });

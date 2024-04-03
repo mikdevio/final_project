@@ -1,9 +1,17 @@
 const path = require("path");
 
 const Sale = require("../models/sale.model");
+const Product = require("../models/product.model");
+const Category = require("../models/category.model");
 
 exports.callPos = async (req, res) => {
+
+  const productList = await Product.find({});
+  const categoryList = await Category.find({});
+
   res.render("partials/pos.ejs", {
+    products: productList,
+    categories: categoryList,
     layout: path.join(__dirname, "../views/layouts/dashboard"),
   });
 };

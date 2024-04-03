@@ -13,6 +13,10 @@ const userSchema = new Schema(
     email: String,
     password: String,
     role: String,
+    img: {
+      data: Buffer,
+      contentType: String
+    }
   },
   { timestamps: true }
 );
