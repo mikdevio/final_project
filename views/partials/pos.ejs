@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-5 d-flex justify-content-end gap-2">
                                 <a href="#" class="btn btn-primary btn-sm">Customer</a>
-                                <a href="#" class="btn btn-danger btn-sm">Cancel</a>
+                                <a href="#" class="btn btn-danger btn-sm" id="btnClearCart">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -116,20 +116,24 @@
                             <div class="container-fluid h-100 d-flex flex-column ">
                                 <div class="row flex-grow-1 ">
                                     <div class="col">Subtotal</div>
-                                    <div class="col text-end ">$2000.00</div>
+                                    <div class="col text-end "><span id="subtotal">0.00 USD</span></div>
                                 </div>
                                 <div class="row flex-grow-1 ">
                                     <div class="col">Tax</div>
-                                    <div class="col text-end ">$125.15</div>
+                                    <div class="col text-end "><span id="tax">0.00 USD</span></div>
+                                </div>
+                                <div class="row flex-grow-1 ">
+                                    <div class="col">Discount</div>
+                                    <div class="col text-end "><span id="discount">0.00 USD</span></div>
                                 </div>
                                 <div class="row flex-grow-1 ">
                                     <div class="col">Total</div>
-                                    <div class="col text-end "> <span class="text-success fw-semibold ">$2125.15</span>
+                                    <div class="col text-end "> <span class="text-success-emphasis fw-semibold" id="total" style="font-size: 20px;">0.00 USD</span>
                                     </div>
                                 </div>
                                 <div class=" row flex-grow-1 ">
                                     <div class=" col">Payment mode </div>
-                                    <div class="col text-end"> <span class="text-danger fw-semibold ">Cash</span>
+                                    <div class="col text-end"> <span class="text-danger fw-semibold">Cash</span>
                                     </div>
                                 </div>
                                 <div class=" row flex-grow-1 mt-2">
@@ -149,55 +153,139 @@
 </div>
 
 <script>
-     // POS logic
-    let posProductList = [];
+    // POS > Chart update function
+    let posCartOrders = [];
 
-    function updateList() {
+    function updateOrderList() {
 
-        if(posProductList.length > 0) {
+        const tableBody = listProductTable.getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = "";
+        
+        posCartOrders.forEach((order, i) => {                
+            const tr = document.createElement("tr");
+            const th_1 = document.createElement("th");
+            const td_2 = document.createElement("td");
+            const td_3 = document.createElement("td");
+            const td_4 = document.createElement("td");
+            const td_5 = document.createElement("td");
 
-            const tableBody = listProductTable.getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = "";
+            const a_td_5 = document.createElement("a");
+            const input_td_3 = document.createElement("input");
 
-            posProductList.forEach((product, i) => {                
-                const tr = document.createElement("tr");
-                const th_1 = document.createElement("th");
-                const td_2 = document.createElement("td");
-                const td_3 = document.createElement("td");
-                const td_4 = document.createElement("td");
-                const td_5 = document.createElement("td");
-                
-                th_1.innerText = i;
-                th_1.scope = "row";
-                td_2.innerText = product.name;
-                td_3.innerHTML = '<input class="form-control form-control-sm" type="number" value="1" style="width: 80px;">';
-                td_4.innerText = product.price;
-                td_5.innerHTML = '<a href="#" class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a>';
+            
+            th_1.innerText = i;
+            th_1.scope = "row";
+            td_2.innerText = order.product.name;
+            
+            // Input field
+            input_td_3.className = "form-control form-control-sm";
+            input_td_3.type = "number";
+            input_td_3.min = "1";
+            input_td_3.value = `${order.quantity}`;
+            input_td_3.style = "width: 80px;";
+            
+            td_4.innerText = order.product.price;
+            // Delete button
+            a_td_5.className = "btn btn-danger btn-sm";
+            a_td_5.id =`delete_${order.product._id}`;
+            a_td_5.innerHTML =  '<i class="bi bi-trash"></i></a>'
 
-                tr.appendChild(th_1);
-                tr.appendChild(td_2);
-                tr.appendChild(td_3);
-                tr.appendChild(td_4);
-                tr.appendChild(td_5);
-
-                tableBody.append(tr);
+            // Eventlistener for delete button
+            a_td_5.addEventListener('click', (e) => {
+                let deletedOrder = posCartOrders.find(order2 => order2.product._id == order.product._id);
+                if(deletedOrder){
+                    // console.log(deletedOrder);
+                    const iProduct = posCartOrders.indexOf(deletedOrder);
+                    posCartOrders.splice(iProduct, 1);
+                    updateOrderList();
+                    updateFields();
+                }
             });
-        };
-    }
 
+            // Eventlistener for input number control
+            input_td_3.addEventListener('input', (e)=>{
+                let changedOrder = posCartOrders.find(order2 => order2.product._id == order.product._id);
+                changedOrder.quantity = e.target.value;
+                changedOrder.subtotal = changedOrder.quantity*changedOrder.product.price;
+                changedOrder.discount = changedOrder.quantity*changedOrder.product.discount*changedOrder.product.price;
+                updateFields();
+            });
+
+            td_3.append(input_td_3);
+            td_5.appendChild(a_td_5);
+
+            tr.appendChild(th_1);
+            tr.appendChild(td_2);
+            tr.appendChild(td_3);
+            tr.appendChild(td_4);
+            tr.appendChild(td_5);
+
+            tableBody.append(tr);
+        });
+    };
+
+    // Update fields on cart
+    function updateFields(){
+        const subtotal_field = document.querySelector('#subtotal');
+        const tax_field = document.querySelector('#tax');
+        const discount_field = document.querySelector('#discount');
+        const total_field = document.querySelector('#total');
+
+        let subtotal = 0;
+        let discount = 0;
+        let tax = 0;
+
+        posCartOrders.forEach(order => {
+            subtotal += order.subtotal;
+            discount += order.discount;
+            tax += order.product.tax*order.subtotal;
+        });
+
+        subtotal_field.innerText = `${subtotal.toFixed(2)} USD`;
+        tax_field.innerText = `${tax.toFixed(2)} USD`;
+        discount_field.innerText = `${discount.toFixed(2)} USD`;
+        total_field.innerText = `${(subtotal+tax-discount).toFixed(2)} USD`;
+    }
+    
+     // POS logic
     (() => {
+            // Products data from server
             const productList = <%- JSON.stringify(products) %>;
 
+            // Add products to cart
             const btnsAddProduct = document.querySelectorAll("a.btn.btn-success.btn-sm");
-
             btnsAddProduct.forEach(btn => {
                 btn.addEventListener('click', (e)=>{
                     let addedProduct = productList.find(product => product._id == btn.id);
-                    posProductList.push(addedProduct);
-                    updateList();
-                    console.log(btn, addedProduct);
-                    console.log(posProductList);
+                    if(posCartOrders.find(order => order.product == addedProduct)){
+                        const editedOrder = posCartOrders.find(order => order.product._id == addedProduct._id);
+                        
+                        editedOrder.quantity += 1;
+                        editedOrder.subtotal = editedOrder.quantity*editedOrder.product.price;
+                        editedOrder.discount = editedOrder.quantity*editedOrder.product.discount*editedOrder.product.price;
+
+                    } else {
+                        posCartOrders.push({
+                            product: addedProduct,
+                            quantity: 1,
+                            subtotal: addedProduct.price,
+                            discount: addedProduct.discount
+                        })
+                    }
+                    // console.log(posProductOrders);
+                    updateOrderList();
+                    updateFields();
                 });
             });
+
+            // Clear porducts from cart
+            const btnClearCart = document.getElementById("btnClearCart");
+            btnClearCart.addEventListener('click', (e) => {
+                posCartOrders.length = 0;
+                updateOrderList();
+                updateFields();
+            });
+
+
         })();
 </script>

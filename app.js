@@ -6,7 +6,6 @@ const expressLayouts = require("express-ejs-layouts");
 
 const env = require("dotenv");
 
-const settings = require("./settings");
 const indexRouter = require("./routers/index.router");
 
 const { initializeDB } = require("./utils/db");
@@ -49,5 +48,5 @@ app.use(bodyParser.json());
 app.use("/", indexRouter);
 
 app.listen(process.env.PORT || "3000", () => {
-  console.log(`App ready on port ${settings.PORT}`);
+  console.log(`App ready on port ${process.env.PORT}`);
 });

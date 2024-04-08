@@ -13,7 +13,8 @@ const productSchema = new Schema(
     img: {
       data: Buffer,
       contentType: String
-    }
+    },
+    category: { type: Schema.Types.ObjectId, ref: "Category" }
   },
   { timestamps: true }
 );

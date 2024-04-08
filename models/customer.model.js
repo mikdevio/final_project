@@ -1,6 +1,5 @@
 const path = require("path");
 const mongoose = require("mongoose");
-const settings = require("../settings");
 
 const Schema = mongoose.Schema;
 

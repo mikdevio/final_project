@@ -187,6 +187,7 @@ a.sidebar-link:hover {
     border-color: #3b7ddd;
     box-shadow: 1px 1px 1px rgb(33, 135, 252);
     transform: scale(1.025);
+    transition: 0.25s;
 }
 
 .price-badge{
