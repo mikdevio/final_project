@@ -17,7 +17,7 @@ const userSchema = new Schema(
       data: Buffer,
       contentType: String
     },
-    role: { type: Schema.Types.ObjectId, ref: "Role" }
+    // role: { type: Schema.Types.ObjectId, ref: "Role" }
   },
   { timestamps: true }
 );

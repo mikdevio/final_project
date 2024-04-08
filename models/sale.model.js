@@ -10,8 +10,10 @@ const saleSchema = new Schema(
         quantity: Number,
       },
     ],
+    subTotal: Number,
     totalAmount: Number,
-    saleDate: { type: Date, default: Date.now() },
+    taxAmount: Number,
+    discountAmount: Number
   },
   { timestamps: true }
 );

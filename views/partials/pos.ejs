@@ -31,7 +31,7 @@
                                 <% categories.forEach(category => { %>
                                     <div class="card w-100 text-center mt-1 mb-1 card-hovered p-0">
                                         <div class="card-body p-1 m-0">
-                                            <span class="fw-bold" style="font-size: 12px;"><i class="bi bi-tag"></i>  <%= category.name %>
+                                            <span class="fw-bold" style="font-size: 12px;"><i class="bi bi-tag"></i> <%= category.name %>
                                             </span>
                                             <span class="badge bg-primary " style="font-size: 10px;">
                                                 <%- 20 %>
@@ -50,7 +50,7 @@
                                         <img src="#" class="card-img-top bg-body-secondary" alt="image"
                                         style="width: auto; height: 150px;">
                                         <span class="badge notify-badge">
-                                            -<%- product.discount * 100 %>%
+                                            <strong style="font-size: 12px;"><%- product.quantity %> </strong>/ <%- product.discount * 100 %>%
                                         </span>
                                         <span class="badge price-badge">
                                             <%- product.price %> USD
@@ -86,24 +86,33 @@
                                 <span class="fw-semibold fs-5 ">Cart</span>
                             </div>
                             <div class="col-5 d-flex justify-content-end gap-2">
-                                <a href="#" class="btn btn-primary btn-sm">Customer</a>
+                                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModalSelection">Customer</a>
                                 <a href="#" class="btn btn-danger btn-sm" id="btnClearCart">Cancel</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body pt-0">
                     <div class="container-fluid m-0 p-0 h-100 d-flex flex-column ">
+                        <div class="row flex-grow-0">
+                            <div class="col-auto w-100">
+                                <p class="marquee">
+                                    <span id="customerMarqueeSpan">
+                                    <!-- Customer Slider message -->
+                                </span>
+                            </p>
+                            </div>
+                        </div>
                         <div class="row flex-grow-1 ">
                             <div class="col-12 ">
-                                <table class="table table-sm text-center" style="font-size: 12px;" id="listProductTable"">
+                                <table class="table table-sm text-center" style="font-size: 12px;" id="listProductTable">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Item</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Delete</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -133,32 +142,77 @@
                                 </div>
                                 <div class=" row flex-grow-1 ">
                                     <div class=" col">Payment mode </div>
-                                    <div class="col text-end"> <span class="text-danger fw-semibold">Cash</span>
+                                    <div class="col text-end"> <span class="text-danger fw-semibold" id="paymentMode">Cash</span>
                                     </div>
                                 </div>
                                 <div class=" row flex-grow-1 mt-2">
                                     <div class=" col-12 d-grid">
-                                        <a href="#" class="btn btn-primary  btn-">Pay</a>
+                                        <a href="#" class="btn btn-primary  btn-" id="btnPayAndSaveSale">Pay</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
+
+    // User model dialog
+    <div class="modal fade" id="userModalSelection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Customer</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                .container
+                <table class="table table-sm text-center" style="font-size: 12px;" id="customerTable"">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Tax Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% customers.forEach((customer, i) => {%>
+                            <tr>
+                                <td scope="row"><%- i %></td>
+                                <td><span><%- customer.first_name %> <%- customer.last_name %></span></td>
+                                <td><span><%- customer.tax_number %></span></td>
+                                <td><span><%- customer.email %></span></td>
+                                <td><span><%- customer.phone %></span></td>
+                                <td><a href="#" class="btn btn-primary btn-sm" id="select_<%-customer._id %>" data-bs-dismiss="modal"><i class="bi bi-person-plus-fill"></i></a></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 </div>
 
 <script>
     // POS > Chart update function
     let posCartOrders = [];
+    let customerSelected = undefined;
 
     function updateOrderList() {
 
-        const tableBody = listProductTable.getElementsByTagName('tbody')[0];
+        const orderListTable = document.querySelector('#listProductTable')
+        const tableBody = orderListTable.getElementsByTagName('tbody')[0];
         tableBody.innerHTML = "";
         
         posCartOrders.forEach((order, i) => {                
@@ -191,7 +245,7 @@
             a_td_5.innerHTML =  '<i class="bi bi-trash"></i></a>'
 
             // Eventlistener for delete button
-            a_td_5.addEventListener('click', (e) => {
+            a_td_5.addEventListener('click', () => {
                 let deletedOrder = posCartOrders.find(order2 => order2.product._id == order.product._id);
                 if(deletedOrder){
                     // console.log(deletedOrder);
@@ -223,6 +277,7 @@
             tableBody.append(tr);
         });
     };
+    
 
     // Update fields on cart
     function updateFields(){
@@ -245,17 +300,65 @@
         tax_field.innerText = `${tax.toFixed(2)} USD`;
         discount_field.innerText = `${discount.toFixed(2)} USD`;
         total_field.innerText = `${(subtotal+tax-discount).toFixed(2)} USD`;
+    };
+
+    function updateCustomerMarquee(customer){
+        const custometMarqueSpan = document.querySelector("#customerMarqueeSpan");
+        if(customer){
+            custometMarqueSpan.innerText = `${customer.first_name} ${customer.last_name} > ${customer.tax_number} > ${customer.email} > ${customer.phone}`;
+        }
     }
+
+    function initCustomerMarquee(){
+        const custometMarqueSpan = document.querySelector("#customerMarqueeSpan");
+        if(!customerSelected){
+            custometMarqueSpan.innerText = "No customer selected!! Please, choose one to generate the bill.".toUpperCase();
+        }
+    }
+
+    function getSaleData() {
+        return saleData = {
+            customer: customerSelected._id,
+            products: posCartOrders.map(orders => {return {productID: orders.product._id, quantity: orders.quantity}}),
+            subTotal: Number($("#subtotal").text().split(" ")[0]),
+            totalAmount: Number($("#total").text().split(" ")[0]),
+            taxAmount: Number($("#tax").text().split(" ")[0]),
+            discountAmount: Number($("#discount").text().split(" ")[0]),
+            paymentMode: $("#paymentMode").text(),
+        };
+        // console.log(saleData);
+    };       
+
+    async function postData(url="", data={}) {
+        const response = await fetch(url, {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(data),
+        });
+        return response;
+    }
+
     
      // POS logic
     (() => {
             // Products data from server
             const productList = <%- JSON.stringify(products) %>;
+            const customerList = <%- JSON.stringify(customers) %>;
+
+            // Initialize customer marquee
+            initCustomerMarquee();
 
             // Add products to cart
             const btnsAddProduct = document.querySelectorAll("a.btn.btn-success.btn-sm");
             btnsAddProduct.forEach(btn => {
-                btn.addEventListener('click', (e)=>{
+                btn.addEventListener('click', ()=>{
                     let addedProduct = productList.find(product => product._id == btn.id);
                     if(posCartOrders.find(order => order.product == addedProduct)){
                         const editedOrder = posCartOrders.find(order => order.product._id == addedProduct._id);
@@ -280,12 +383,36 @@
 
             // Clear porducts from cart
             const btnClearCart = document.getElementById("btnClearCart");
-            btnClearCart.addEventListener('click', (e) => {
+            btnClearCart.addEventListener('click', () => {
                 posCartOrders.length = 0;
+                customerSelected = undefined;
                 updateOrderList();
                 updateFields();
+                initCustomerMarquee();
             });
 
+            // Add customer
+            const btnsAddCustomer = document.querySelectorAll("a[id^='select_']");
+            btnsAddCustomer.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let addedCustomer = customerList.find(customer => customer._id == btn.id.split("_")[1])
+                    if(!customerSelected) {
+                        customerSelected = addedCustomer;
+                        updateCustomerMarquee(addedCustomer);
+                    }
+                });
+            });
+
+            // Save Sale
+            const btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
+            btnPayAndSaveSale.addEventListener('click', ()=>{
+                // Get Sale data
+                let data = getSaleData();
+                console.log(data);
+                postData("/sale/create-pos", { data });
+                // Clear pos
+                window.location.reload(true);
+            });
 
         })();
 </script>

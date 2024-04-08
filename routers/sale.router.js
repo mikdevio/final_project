@@ -13,6 +13,8 @@ router.route("/new").get(saleController.newItem);
 
 router.route("/create").post(saleController.createItem);
 
+router.route("/create-pos").post(saleController.createFromPos);
+
 router.route("/update/:id").post(saleController.updateItem);
 
 router.get("/delete/:id").get(saleController.deleteItem);

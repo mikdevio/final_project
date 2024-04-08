@@ -1,5 +1,6 @@
 const express = require('express');
 
+const billRouter = require("./bill.router");
 const roleRouter = require("./role.router");
 const userRouter = require("./user.router");
 const saleRouter = require("./sale.router");
@@ -16,7 +17,8 @@ router.route("/")
 
 router.route('/about')
     .get(indexController.about);
-
+    
+router.use("/bill", billRouter);
 router.use("/user", userRouter);
 router.use("/role", roleRouter);
 router.use("/sale", saleRouter);
