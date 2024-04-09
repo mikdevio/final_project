@@ -1,5 +1,7 @@
+const fs = require("fs");
 const path = require("path");
 
+const report = require("../utils/report");
 const Category = require("../models/category.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
@@ -74,3 +76,26 @@ exports.deleteItem = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.generateReport = async (req, res) => {
+  try {
+    const categoryList = await Category.find({});
+
+    await report.generateAllReport(categoryList, "category");
+
+    // Header file
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=all-category.pdf');
+    res.setHeader('Content-Length', fs.statSync('all-category.pdf').size);
+
+    // File stream
+    const pdfStream = fs.createReadStream('all-category.pdf');
+    pdfStream.pipe(res);
+
+    res.redirect("/user/all");
+
+  } catch (error) {
+    console.error('Error during report generation process:', error);
+    res.status(500).send('Error on PDF report generation.');
+  }
+}

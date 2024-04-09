@@ -98,6 +98,7 @@ exports.generateAllReport = (data, model) => {
 
     const reportOptions = {
         orientation: "landscape",
+        directory: "/reps",
         format: 'A4',
         border: {
           top: '1cm',

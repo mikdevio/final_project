@@ -21,4 +21,7 @@ router.route("/update/:id")
 router.get("/delete/:id")
     .get(categoryController.deleteItem);
 
+router.route("/report")
+    .get(categoryController.generateReport);
+
 module.exports = router;

@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const report = require("../utils/report");
 
+const report = require("../utils/report");
 const Product = require("../models/product.model");
 const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
 
