@@ -21,4 +21,7 @@ router.route("/update/:id")
 router.route("/delete/:id")
     .get(customerController.deleteItem);
 
+router.route("/report")
+    .get(customerController.generateReport);
+
 module.exports = router;

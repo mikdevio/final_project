@@ -372,7 +372,7 @@
                             product: addedProduct,
                             quantity: 1,
                             subtotal: addedProduct.price,
-                            discount: addedProduct.discount
+                            discount: addedProduct.discount*addedProduct.price
                         })
                     }
                     // console.log(posProductOrders);
@@ -413,6 +413,5 @@
                 // Clear pos
                 window.location.reload(true);
             });
-
         })();
 </script>
