@@ -74,6 +74,7 @@ exports.createItem = async (req, res) => {
 };
 
 exports.createFromPos = async(req, res) => {
+
   const newSale = new Sale({
     customer: req.body.data.customer,
     products: req.body.data.products,
