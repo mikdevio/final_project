@@ -91,16 +91,22 @@ exports.generateReport = async (req, res) => {
   try {
     const productsList = await Product.find({});
 
-    await report.generateAllReport(productsList, "product");
+    const filename = await report.generateAllReport(productsList, "product");
+
+    console.log(filename);
+
+    // TODO: Fix path problem for report pdf file
+    // console.log(fs.statSync(filename))
 
     // Header file
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=all-product.pdf');
-    res.setHeader('Content-Length', fs.statSync('all-product.pdf').size);
-
-    // File stream
-    const pdfStream = fs.createReadStream('all-product.pdf');
-    pdfStream.pipe(res);
+    // res.setHeader('Content-Type', 'application/pdf');
+    // res.setHeader('Content-Disposition', `attachment; filename='${filename}'`);
+    // res.setHeader('Content-Length', fs.statSync(filename).size);
+  
+    // console.log(res);
+    // // File stream
+    // const pdfStream = fs.createReadStream(path.join(filename,""));
+    // // pdfStream.pipe(res);
 
     res.redirect("/product/all");
 

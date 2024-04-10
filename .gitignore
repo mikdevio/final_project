@@ -131,4 +131,5 @@ dist
 
 # pdf reports
 reps/
+temp/
 *.pdf

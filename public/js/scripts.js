@@ -84,10 +84,7 @@ const graphData = {
 
 // Datatable definition
 let table = new DataTable("#datatableGen");
-table.responsive = true;
-
 let table_dashboard = new DataTable("#dashboardTable");
-table_dashboard.responsive = true;
 
 let charts = [];
 

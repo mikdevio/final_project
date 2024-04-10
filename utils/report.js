@@ -1,7 +1,9 @@
-
+const path = require("path");
 const pdf = require("html-pdf");
 
 exports.generateAllReport = (data, model) => {
+
+    let file_url =path.join(__dirname,`../temp/all_${model}_${Date.now()}.pdf`);
 
     const reportStyle = 
     `
@@ -98,7 +100,7 @@ exports.generateAllReport = (data, model) => {
 
     const reportOptions = {
         orientation: "landscape",
-        directory: "/reps",
+        directory: "./temp",
         format: 'A4',
         border: {
           top: '1cm',
@@ -109,7 +111,7 @@ exports.generateAllReport = (data, model) => {
       };
 
     // Generate Report
-    pdf.create(reportBody, reportOptions).toFile(`all-${model}.pdf`, (err, res) => {
+    pdf.create(reportBody, reportOptions).toFile(file_url, (err, res) => {
         if(err){
             console.log("Error in report generation process", err);
         } else {
@@ -117,4 +119,5 @@ exports.generateAllReport = (data, model) => {
         }
     });
     // console.log(reportBody);
+    return file_url;
 }

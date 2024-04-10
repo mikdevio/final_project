@@ -164,7 +164,7 @@
     </div>
 
     // User model dialog
-    <div class="modal fade" id="userModalSelection" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade modal-lg" id="userModalSelection" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,7 +174,7 @@
                 </div>
                 <div class="modal-body">
                     .container
-                    <table class="table table-sm text-center" style="font-size: 12px;" id="customerTable"">
+                    <table class="table table-sm text-center" style="font-size: 14px;" id="customerTable"">
                     <thead>
                         <tr>
                             <th scope=" col">#</th>
@@ -189,7 +189,7 @@
                         <tbody>
                             <% customers.forEach((customer, i)=> {%>
                                 <tr>
-                                    <td scope="row"><%- i %></td>
+                                    <td scope="row"><%- i+1 %></td>
                                     <td><span><%- customer.first_name %> <%- customer.last_name %></span></td>
                                     <td><span><%- customer.tax_number %></span></td>
                                     <td><span><%- customer.email %></span></td>
@@ -331,11 +331,11 @@
             return saleData = {
                 customer: customerSelected._id,
                 products: posCartOrders.map(orders => { return { _id: orders.product._id, quantity: orders.quantity } }),
-                subTotal: Number($("#subtotal").text().split(" ")[0]),
-                totalAmount: Number($("#total").text().split(" ")[0]),
-                taxAmount: Number($("#tax").text().split(" ")[0]),
-                discountAmount: Number($("#discount").text().split(" ")[0]),
-                paymentMode: $("#paymentMode").text(),
+                subTotal: Number(document.querySelector("#subtotal").text().split(" ")[0]),
+                totalAmount: Number(document.querySelector("#total").text().split(" ")[0]),
+                taxAmount: Number(document.querySelector("#tax").text().split(" ")[0]),
+                discountAmount: Number(document.querySelector("#discount").text().split(" ")[0]),
+                paymentMode: document.querySelector("#paymentMode").text(),
             };
             // console.log(saleData);
         };
@@ -421,7 +421,7 @@
                 let data = getSaleData();
                 console.log(data);
                 postData("/sale/create-pos", { data });
-                // Clear pos
+                // Clear POS
                 window.location.reload(true);
             });
         })();
