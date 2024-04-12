@@ -8,16 +8,37 @@ const SALT_WORK_FACTOR = 10;
 // Schema definition
 const userSchema = new Schema(
   {
-    first_name: String,
-    last_name: String,
-    email: String,
-    password: String,
-    role: String,
+    first_name: {
+      type: String, 
+      required:"Your first name is requiered", 
+      max: 25,
+    },
+    last_name: {
+      type: String,
+      required: "Your lastname is requiered",
+      max: 25,
+    },
+    email: {
+      type: String,
+      required: "Your email is required",
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: "Your password is required",
+      select: false,
+      max: 25,
+    },
     img: {
       data: Buffer,
       contentType: String
     },
-    // role: { type: Schema.Types.ObjectId, ref: "Role" }
+    role: { 
+      type: Schema.Types.ObjectId, 
+      ref: "Role", 
+    }
   },
   { timestamps: true }
 );
