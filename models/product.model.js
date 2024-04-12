@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
@@ -12,13 +13,16 @@ const productSchema = new Schema(
     quantity: Number,
     img: {
       data: Buffer,
-      contentType: String
+      contentType: String,
     },
-    category: { type: Schema.Types.ObjectId, ref: "Category" }
+    category: { 
+      type: Schema.Types.ObjectId, 
+      ref: "Category"
+      }
   },
   { timestamps: true }
 );
 
 const Product = mongoose.model("Product", productSchema);
 
-module.exports = Product;
+export default Product;

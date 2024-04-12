@@ -1,14 +1,15 @@
-const path = require("path");
+import path from "path";
 
+import { __layout_main } from "../settings.js";
 
-exports.home = (req, res) => {
+export const home = (req, res) => {
     res.render("index", {
-        layout: path.join(__dirname, "../views/layouts/main")
+        layout: __layout_main
     });
 };
 
-exports.about = (req, res) => {
+export const about = (req, res) => {
     res.render("about", {
-        layout: path.join(__dirname, "../views/layouts/main")
+        layout: __layout_main
     });
 };

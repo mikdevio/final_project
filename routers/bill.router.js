@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
+import * as billController from "../controllers/bill.controller.js";
 
-const billController = require("../controllers/bill.controller");
 const router = express.Router();
 
 router.route("/all")
@@ -24,4 +24,4 @@ router.get("/delete/:id")
 router.route("/report")
     .get(billController.generateReport);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const path = require("path");
-const express = require("express");
+import path from "path";
+import express from "express";
 
-const roleController = require("../controllers/role.controller");
+import * as roleController from "../controllers/role.controller.js";
 
 const router = express.Router();
 
@@ -26,4 +26,4 @@ router.route("/delete/:id")
 router.route("/report")
     .get(roleController.generateReport);
 
-module.exports = router;
+export default router;

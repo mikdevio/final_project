@@ -1,17 +1,18 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const report = require("../utils/report");
-const Sale = require("../models/sale.model");
-const Product = require("../models/product.model");
-const Category = require("../models/category.model");
-const Customer = require("../models/customer.model");
-const Bill = require("../models/bill.model");
-const User = require("../models/user.model");
+import Sale from "../models/sale.model.js";
+import Bill from "../models/bill.model.js";
+import User from "../models/user.model.js";
+import * as report from "../utils/report.js";
+import Product from "../models/product.model.js";
+import Category from "../models/category.model.js";
+import Customer from "../models/customer.model.js";
 
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
+import { __layout_dashboard } from "../settings.js";
 
-exports.callPos = async (req, res) => {
+export const callPos = async (req, res) => {
 
   const productList = await Product.find({});
   const categoryList = await Category.find({});
@@ -21,41 +22,41 @@ exports.callPos = async (req, res) => {
     products: productList,
     categories: categoryList,
     customers: customerList,
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.getAll = async (req, res) => {
+export const getAll = async (req, res) => {
   const salesList = await Sale.find({});
   res.render("partials/table.ejs", {
     data: salesList,
     table_title: "Sales",
     model: "sale",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Sale.findById(id).exec();
   let fields = dataFilledFromModel(Sale, data);
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "sale",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(Sale);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "sale",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
   const newSale = new Sale({
     customer: req.body.customer,
     products: req.body.products,
@@ -73,7 +74,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.createFromPos = async(req, res) => {
+export const createFromPos = async(req, res) => {
 
   const newSale = new Sale({
     customer: req.body.data.customer,
@@ -109,7 +110,7 @@ exports.createFromPos = async(req, res) => {
   }
 };
 
-exports.updateItem = async (req, res) => {
+export const updateItem = async (req, res) => {
   const saleId = req.params.id;
 
   try {
@@ -127,7 +128,7 @@ exports.updateItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const saleId = req.params.id;
   try {
     await Product.findOneAndDelete({ _id: saleId });
@@ -137,7 +138,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const saleList = await Sale.find({});
 

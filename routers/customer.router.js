@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
+import * as customerController from '../controllers/customer.controller.js';
 
-const customerController = require('../controllers/customer.controller');
 const router = express.Router();
 
 router.route("/all")
@@ -24,4 +24,4 @@ router.route("/delete/:id")
 router.route("/report")
     .get(customerController.generateReport);
 
-module.exports = router;
+export default router;

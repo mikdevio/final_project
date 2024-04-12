@@ -152,7 +152,8 @@
                                 </div>
                                 <div class=" row flex-grow-1 mt-2">
                                     <div class=" col-12 d-grid">
-                                        <a href="#" class="btn btn-primary  btn-" id="btnPayAndSaveSale">Pay</a>
+                                        <a href="#" class="btn btn-primary  btn-" id="btnPayAndSaveSale" data-bs-toggle="modal"
+                                        data-bs-target="#payModal">Pay</a>
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +164,8 @@
         </div>
     </div>
 
-    // User model dialog
-    <div class="modal fade modal-lg" id="userModalSelection" tabindex="-1" aria-labelledby="exampleModalLabel"
+    // User modal dialog
+    <div class="modal fade modal-lg" id="userModalSelection" tabindex="-1" aria-labelledby="userModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -173,17 +174,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    .container
                     <table class="table table-sm text-center" style="font-size: 14px;" id="customerTable"">
-                    <thead>
-                        <tr>
-                            <th scope=" col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Tax Number</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Action</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th scope=" col">#</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Tax Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Action</th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -197,18 +197,35 @@
                                     <td><a href="#" class="btn btn-primary btn-sm" id="select_<%-customer._id %>"
                                             data-bs-dismiss="modal"><i class="bi bi-person-plus-fill"></i></a></td>
                                 </tr>
-                                <% }); %>
+                            <% }); %>
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-
+    // Payment modal dialog
+    <div class="modal fade modal-lg" id="payModal" tabindex="-1" aria-labelledby="payModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Payment modal body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -414,15 +431,15 @@
                 });
             });
 
-            // Save Sale
-            const btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
-            btnPayAndSaveSale.addEventListener('click', () => {
-                // Get Sale data
-                let data = getSaleData();
-                console.log(data);
-                postData("/sale/create-pos", { data });
-                // Clear POS
-                window.location.reload(true);
-            });
+            // Pay event
+            // const btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
+            // btnPayAndSaveSale.addEventListener('click', () => {
+            //     // Get Sale data
+            //     let data = getSaleData();
+            //     console.log(data);
+            //     postData("/sale/create-pos", { data });
+            //     // Clear POS
+            //     window.location.reload(true);
+            // });
         })();
     </script>

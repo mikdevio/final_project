@@ -1,5 +1,5 @@
 
-exports.dataFilledFromModel = (model, data) => {
+export const dataFilledFromModel = (model, data) => {
 
     let fields = {};
     // Data object
@@ -14,7 +14,7 @@ exports.dataFilledFromModel = (model, data) => {
     
 };
 
-exports.dataEmptyFromModel = model => {
+export const dataEmptyFromModel = model => {
     let fields = {};
     let val = undefined;
     
@@ -36,4 +36,3 @@ exports.dataEmptyFromModel = model => {
 
     return fields;
 }
-

@@ -1,7 +1,8 @@
-const path = require("path");
-const pdf = require("html-pdf");
+import path from "path";
+import pdf from "html-pdf";
 
-exports.generateAllReport = (data, model) => {
+// TODO: Verify multiple fucntion exportation
+export const generateReport = (data, model) => {
 
     let file_url =path.join(__dirname,`../temp/all_${model}_${Date.now()}.pdf`);
 
@@ -121,3 +122,5 @@ exports.generateAllReport = (data, model) => {
     // console.log(reportBody);
     return file_url;
 }
+
+export const billReport = (data) => {console.log("Empty")};

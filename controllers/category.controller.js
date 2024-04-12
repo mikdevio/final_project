@@ -1,21 +1,22 @@
-const fs = require("fs");
-const path = require("path");
+import path from "path";
 
-const report = require("../utils/report");
-const Category = require("../models/category.model");
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import * as report from "../utils/report.js";
+import Category from "../models/category.model.js";
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 
-exports.getAll = async (req, res) => {
+import { __layout_dashboard } from "../settings.js";
+
+export const getAll = async (req, res) => {
   const categoriesList = await Category.find({});
   res.render("partials/table.ejs", {
     data: categoriesList,
     table_title: "Categories",
     model: "category",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Category.findById(id).exec();
   let fields = dataFilledFromModel(Category, data);
@@ -23,20 +24,20 @@ exports.editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "category",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(Category);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "category",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
   const newCategory = new Category({
     name: req.body.name,
     description: req.body.description,
@@ -50,7 +51,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.updateItem = async (req, res) => {
+export const updateItem = async (req, res) => {
   const categoryId = req.params.id;
   try {
     await Category.findOneAndUpdate(
@@ -67,7 +68,7 @@ exports.updateItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const categoryId = req.params.id;
   try {
     await Category.findOneAndDelete({ _id: categoryId });
@@ -77,7 +78,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const categoryList = await Category.find({});
 

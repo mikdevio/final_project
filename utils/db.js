@@ -1,11 +1,11 @@
-const Product = require("../models/product.model");
-const Customer = require("../models/customer.model");
-const User = require("../models/user.model");
-const Category = require("../models/category.model");
-const Role = require("../models/role.model");
+import Product from "../models/product.model.js";
+import Customer from "../models/customer.model.js"
+import User from "../models/user.model.js";
+import Category from "../models/category.model.js";
+import Role from "../models/role.model.js";
 
 // TODO: Complete this DB initialization
-exports.initializeDB = async () => {
+export const initializeDB = async () => {
   // Insert data on products collection
   await Product.insertMany([
     {

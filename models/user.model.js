@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
-const bcrypt = require("bcrypt");
+const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
 
@@ -53,4 +53,4 @@ userSchema.methods.comparePassword = (passwordToValidate, cb) => {
 // Model definition
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+export default User;

@@ -1,22 +1,23 @@
-const fs = require("fs");
-const path = require("path");
-const report = require("../utils/report");
+import fs from "fs";
+import path from "path";
+import Bill from "../models/bill.model.js";
 
-const Bill = require("../models/bill.model");
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import * as report from "../utils/report.js";
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
+import { __layout_dashboard } from "../settings.js";
 
 
-exports.getAll = async (_, res) => {
+export const getAll = async (_, res) => {
   const billList = await Bill.find({});
   res.render("partials/table.ejs", {
     data: billList,
     table_title: "Bills",
     model: "bill",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await User.findById(id).exec();
   let fields = dataFilledFromModel(Bill, data);
@@ -24,20 +25,20 @@ exports.editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(Bill);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
 //   const newUser = new Bill({
 //     first_name: req.body.first_name,
 //     last_name: req.body.last_name,
@@ -54,7 +55,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.updateItem = async (req, res) => {
+export const updateItem = async (req, res) => {
   const billId = req.params.id;
   try {
     // await User.findOneAndUpdate(
@@ -73,7 +74,7 @@ exports.updateItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const billId = req.params.id;
   try {
     await Bill.findOneAndDelete({ _id: billId });
@@ -83,7 +84,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const billList = await Bill.find({});
 

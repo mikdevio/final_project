@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 
-const saleController = require("../controllers/sale.controller");
+import * as saleController from "../controllers/sale.controller.js";
 const router = express.Router();
 
 router.route("/pos")
@@ -30,4 +30,4 @@ router.get("/delete/:id")
 router.route("/report")
     .get(saleController.generateReport);
 
-module.exports = router;
+export default router;

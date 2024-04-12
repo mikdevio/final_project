@@ -1,21 +1,23 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const report = require("../utils/report");
-const Role = require("../models/role.model");
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import * as report from "../utils/report.js";
+import Role from "../models/role.model.js";
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 
-exports.getAll = async (req, res) => {
+import { __layout_dashboard } from "../settings.js";
+
+export const getAll = async (req, res) => {
   const rolesList = await Role.find({});
   res.render("partials/table.ejs", {
     data: rolesList,
     table_title: "Roles",
     model: "role",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Role.findById(id).exec();
   let fields = dataFilledFromModel(Role, data);
@@ -23,20 +25,20 @@ exports.editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "role",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(Role);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "role",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
   const newCustomer = new Role({
     name: req.body.name,
     description: req.body.description,
@@ -51,7 +53,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.updateItem = async (req, res) => {
+export const updateItem = async (req, res) => {
   const customerId = req.params.id;
   try {
     await Customer.findOneAndUpdate(
@@ -68,7 +70,7 @@ exports.updateItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const roleId = req.params.id;
   try {
     await Role.findOneAndDelete({ _id: roleId });
@@ -78,7 +80,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const roleList = await Role.find({});
 

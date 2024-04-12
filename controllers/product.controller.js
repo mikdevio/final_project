@@ -1,42 +1,44 @@
-const fs = require("fs");
-const path = require("path");
-const express = require("express");
+import fs from "fs";
+import path from "path";
+import express from "express";
 
-const report = require("../utils/report");
-const Product = require("../models/product.model");
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import * as report from "../utils/report.js";
+import Product from "../models/product.model.js";
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 
-exports.getAll = async (req, res) => {
+import { __layout_dashboard } from "../settings.js";
+
+export const getAll = async (req, res) => {
   const productsList = await Product.find({});
   res.render("partials/table.ejs", {
     data: productsList,
     table_title: "Products",
     model: "product",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await Product.findById(id).exec();
   let fields = dataFilledFromModel(Product, data);
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "product",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(Product);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "product",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -55,7 +57,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.updateItem = async (req, res) => {
+export const updateItem = async (req, res) => {
   const productId = req.params.id;
 
   try {
@@ -77,7 +79,7 @@ exports.updateItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const productId = req.params.id;
   try {
     await Product.findOneAndDelete({ _id: productId });
@@ -87,7 +89,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const productsList = await Product.find({});
 

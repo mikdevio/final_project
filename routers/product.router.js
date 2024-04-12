@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import upload from "../middlewares/upload.js";
 
-const productController = require('../controllers/product.controller');
+import * as productController from '../controllers/product.controller.js';
 
 const router = express.Router();
 
@@ -25,4 +26,4 @@ router.route("/delete/:id")
 router.route("/report")
     .get(productController.generateReport);
 
-module.exports = router;
+export default router;

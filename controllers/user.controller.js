@@ -1,51 +1,55 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const report = require("../utils/report");
-const User = require("../models/user.model");
-const { dataEmptyFromModel, dataFilledFromModel } = require("../utils/func");
+import User from "../models/user.model.js";
+import * as report from "../utils/report.js";
 
-exports.getLogin = (req, res) => {
+import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
+import { __layout_main, __layout_dashboard } from "../settings.js";
+
+export const getLogin = (req, res) => {
+
+  
   res.render("user.login.ejs", {
-    layout: path.join(__dirname, "../views/layouts/main")
+    layout: __layout_main
   });
 };
 
-exports.postLogin = (req, res) => {
+export const postLogin = (req, res) => {
   const data = req.body;
   console.log(data);
   res.send(data);
 };
 
-exports.getSignup = (req, res) => {
+export const getSignup = (req, res) => {
   res.render("user.signup.ejs", {
-    layout: path.join(__dirname, "../views/layouts/main")
+    layout: __layout_main
   });
 };
 
-exports.postSignup = (req, res) => {
+export const postSignup = (req, res) => {
   const data = req.body;
   console.log(data);
   res.send(data);
 };
 
-exports.getDashboard = (req, res) => {
+export const getDashboard = (req, res) => {
   res.render("user.dashboard.ejs", {
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.getAll = async (_, res) => {
+export const getAll = async (_, res) => {
   const usersList = await User.find({});
   res.render("partials/table.ejs", {
     data: usersList,
     table_title: "Users",
     model: "user",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const id = req.params.id;
   const data = await User.findById(id).exec();
   let fields = dataFilledFromModel(User, data);
@@ -53,20 +57,20 @@ exports.editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.newItem = (req, res) => {
+export const newItem = (req, res) => {
   let fields = dataEmptyFromModel(User);
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: path.join(__dirname, "../views/layouts/dashboard"),
+    layout: __layout_dashboard,
   });
 };
 
-exports.createItem = async (req, res) => {
+export const createItem = async (req, res) => {
   const newUser = new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -83,7 +87,7 @@ exports.createItem = async (req, res) => {
   }
 };
 
-exports.uptadeItem = async (req, res) => {
+export const uptadeItem = async (req, res) => {
   const userId = req.params.id;
   try {
     await User.findOneAndUpdate(
@@ -102,7 +106,7 @@ exports.uptadeItem = async (req, res) => {
   }
 };
 
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const userId = req.params.id;
   try {
     await User.findOneAndDelete({ _id: userId });
@@ -112,7 +116,7 @@ exports.deleteItem = async (req, res) => {
   }
 };
 
-exports.generateReport = async (req, res) => {
+export const generateReport = async (req, res) => {
   try {
     const userList = await User.find({});
 

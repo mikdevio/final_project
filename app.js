@@ -1,14 +1,15 @@
-const path = require("path");
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const expressLayouts = require("express-ejs-layouts");
 
-const env = require("dotenv");
+import path from "path";
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import expressLayouts from "express-ejs-layouts";
 
-const indexRouter = require("./routers/index.router");
+import env from "dotenv";
 
-const { initializeDB } = require("./utils/db");
+import indexRouter from "./routers/index.router.js";
+import { __dirname } from "./settings.js";
+import { initializeDB } from "./utils/db.js";
 
 
 // Set env config vars
