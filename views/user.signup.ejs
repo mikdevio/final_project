@@ -40,10 +40,10 @@
                     <div class="invalid-feedback" id="passwordValidationArea">Invalid password</div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
+                    <input type="password" class="form-control" id="confirmPassword" name="verifyPassword"
                         placeholder="Password" required>
                     <label for="verifyPassword">Confirm password</label>
-                    <div class="invalid-feedback" id="verifyPasswordValidationArea">Invalid password</div>
+                    <div class="invalid-feedback" id="confirmPasswordValidationArea">Invalid password</div>
                 </div>
                 <div class="container">
                     <div class="row justify-content-between align-items-center ">
@@ -84,9 +84,7 @@
     };
 
     const validatePassword = (password) => {
-        return String(email)
-        .toLocaleLowerCase()
-        .match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/);
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/.test(password);
     };
 
     (() => {
@@ -143,20 +141,37 @@
         const passwordValidationArea = document.querySelector("#passwordValidationArea");
 
         passwordInput.addEventListener("input", () => {
-            
+
+            console.log(validatePassword(passwordInput.value))
             if(validatePassword(passwordInput.value)){
-                passwordValidationArea.innnerText = "Password invalid."
+                passwordValidationArea.innnerText = "";
                 passwordInput.classList.add("is-valid");
                 passwordInput.classList.remove("is-invalid");
-                console.log("valido");
-            } else if ([null, ""].includes(emailInput.value)){
+            } else if ([null, ""].includes(passwordInput.value)){
                 passwordInput.classList.remove("is-valid");
                 passwordInput.classList.remove("is-invalid");
             } else {
-                passwordValidationArea.innerText = "";
+                passwordValidationArea.innerText = "Password invalid. It should have an upper letter and a special character.";
                 passwordInput.classList.add("is-invalid");
                 passwordInput.classList.remove("is-valid");
-                console.log("invalido");
+            }
+        });
+
+        let confirmPasswordInput = document.querySelector("#confirmPassword");
+        let confirmPasswordlArea = document.querySelector("#confirmPasswordValidationArea");
+
+        confirmPasswordInput.addEventListener("input", () => {
+            if(passwordInput.value !== confirmPasswordInput.value){
+                confirmPasswordlArea.innerText = "Emails do not match."
+                confirmPasswordInput.classList.remove("is-valid");
+                confirmPasswordInput.classList.add("is-invalid");
+            } else if ([null, ""].includes(confirmPasswordInput.value)) {
+                confirmPasswordInput.classList.remove("is-valid");
+                confirmPasswordInput.classList.remove("is-invalid");
+            } else {
+                confirmPasswordlArea.innerText = "";
+                confirmPasswordInput.classList.remove("is-invalid");
+                confirmPasswordInput.classList.add("is-valid");
             }
         });
         
