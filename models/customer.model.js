@@ -47,6 +47,4 @@ customerSchema.methods.comparePassword = (passwordToValidate, cb) => {
   });
 };
 
-const Customer = mongoose.model("Customer", customerSchema);
-
-export default Customer;
+export default mongoose.model("Customer", customerSchema);

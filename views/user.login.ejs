@@ -9,9 +9,15 @@
         </div>
 
         <div class="card-body">
+            <% if(message) {%>
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <%- message %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
             <form action="/user/login" method="post">
                 <div class="form-floating mb-3 form-group-sm">
-                    <input type="email" class="form-control" id="email" name="password" placeholder="name@email.com">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@email.com">
                     <label for="floatingEmail">Email address</label>
                 </div>
                 <div class="form-floating mb-3 form-group-sm">

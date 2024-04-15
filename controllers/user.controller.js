@@ -2,28 +2,52 @@ import fs from "fs";
 import path from "path";
 
 import User from "../models/user.model.js";
+import Role from "../models/role.model.js";
 import * as report from "../utils/report.js";
 
 import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 import { __layout_main, __layout_dashboard } from "../settings.js";
 
 export const getLogin = (req, res) => {
-
-  
   res.render("user.login.ejs", {
-    layout: __layout_main
+    layout: __layout_main,
+    message: "",
   });
 };
 
-export const postLogin = (req, res) => {
+export const postLogin = async (req, res) => {
   const data = req.body;
-  console.log(data);
-  res.send(data);
+
+  // Check if user exist
+  const userFound = await User.findOne({ email: data.email }).select("+password");
+  if(!userFound){
+    return res.render("user.login.ejs", {
+      layout: __layout_main,
+      message: `User ${data.email}  not found.`,
+    });
+  };
+
+  // Checking password valid
+  const passValid = await userFound.comparePassword(data.password);
+  if(!passValid){
+    return res.render("user.login.ejs", {
+      layout: __layout_main,
+      message: `Password incorrect.`,
+    });
+  }
+  
+  // Open session
+
+  // redirect to dashboard
+  res.redirect("/user/dashboard");
 };
 
-export const getSignup = (req, res) => {
+export const getSignup = async(req, res) => {
+  const rolesList = await Role.find({});
   res.render("user.signup.ejs", {
-    layout: __layout_main
+    roles: rolesList,
+    layout: __layout_main,
+    message: "",
   });
 };
 
@@ -42,7 +66,10 @@ export const postSignup = async (req, res) => {
     // Check if user exist in database
     const userExist = await User.findOne({ email: email });
     if(userExist){
-      return res.status(400).json({
+      const rolesList = await Role.find({});
+      return res.render("user.signup.ejs",{
+        layout: __layout_main,
+        roles: rolesList,
         status: "failed",
         data: [],
         message: "It seems you already have an account, please log in instead.",
@@ -51,10 +78,11 @@ export const postSignup = async (req, res) => {
 
     const savedUser = await newUser.save();
     const {role, ...user_data } = savedUser._doc;
-    res.status(200).json({
+    res.render("user.login.ejs", {
+      layout: __layout_main,
       status: "success",
       data: [user_data],
-      message: "Thank you for registerin with us. Your account has been successfully created."
+      message: "Thank you for registering with us. Your account has been successfully created."
     });
   } catch (err) {
     console.log(err);

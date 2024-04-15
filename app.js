@@ -22,7 +22,7 @@ const app = express();
 main()
   .then(() => {
     console.log("MongoDB connection Successfully");
-    //initializeDB();
+    // initializeDB();
   })
   .catch((err) => console.log(err));
 

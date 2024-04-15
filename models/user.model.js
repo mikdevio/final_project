@@ -49,29 +49,39 @@ userSchema.pre("save", function (next) {
   // If password is not modified or new got to next
   if (!user.isModified("password")) return next();
 
-  // Generating a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-    // If error go to next
-    if (err) return next();
-
-    bcrypt.hash(user.password, salt, (err, hash) => {
+  try {
+    // Generating a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
       // If error go to next
       if (err) return next();
-      user.password = hash;
-      next();
+
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        // If error go to next
+        if (err) return next();
+        user.password = hash;
+        next();
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+userSchema.pre("insertMany", async function(next, docs) {
+  try {
+
+    for(const doc of docs){
+      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+      doc.password = await bcrypt.hash(doc.password, salt);
+    };
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // Method to compare password
-userSchema.methods.comparePassword = (passwordToValidate, cb) => {
-  bcrypt.compare(passwordToValidate, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+userSchema.methods.comparePassword = function (passwordToValidate) {
+  return bcrypt.compare(passwordToValidate, this.password);
 };
 
-// Model definition
-const User = mongoose.model("User", userSchema);
-
-export default User;
+export default mongoose.model("User", userSchema);

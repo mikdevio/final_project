@@ -18,6 +18,4 @@ const saleSchema = new Schema(
   { timestamps: true }
 );
 
-const Sale = mongoose.model("Sale", saleSchema);
-
-export default Sale;
+export default mongoose.model("Sale", saleSchema);

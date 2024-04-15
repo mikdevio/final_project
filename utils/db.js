@@ -63,14 +63,12 @@ export const initializeDB = async () => {
       first_name: "Miguel",
       last_name: "Villacis",
       email: "villacis.mhva@gmail.com",
-      role: "Manager",
       password: "12345",
     },
     {
       first_name: "Pablo",
       last_name: "Tonato",
       email: "tonato.potm@hotmail.com",
-      role: "Seller",
       password: "12345",
     },
     {
@@ -78,7 +76,6 @@ export const initializeDB = async () => {
       last_name: "Borrado",
       email: "borrable.usuario@gmail.com",
       password: "12345",
-      role: "Seller",
       __v: 0,
     },
     {
@@ -86,7 +83,6 @@ export const initializeDB = async () => {
       last_name: "Borrable",
       email: "usuario@gmail.com",
       password: "123456",
-      role: "Manager",
       __v: 0,
     },
   ]);

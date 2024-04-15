@@ -1,10 +1,12 @@
 import path from "path";
 import pdf from "html-pdf";
 
-// TODO: Verify multiple fucntion exportation
-export const generateReport = (data, model) => {
+import { __dirname } from "../settings.js";
 
-    let file_url =path.join(__dirname,`../temp/all_${model}_${Date.now()}.pdf`);
+// TODO: Verify multiple fucntion exportation
+export const generateAllReport = (data, model) => {
+
+    let file_url =path.join(__dirname,`/temp/all_${model}_${Date.now()}.pdf`);
 
     const reportStyle = 
     `

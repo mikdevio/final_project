@@ -8,6 +8,13 @@
             <a class="text-white " href="/"><i class="bi bi-house h4"></i></a>
         </div>
         <div class="card-body">
+            <% if(message) {%>
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <%- message %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+
             <form action="/user/signup" method="post" id="signupForm" novalidate>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="first_name" name="first_name"
@@ -52,9 +59,9 @@
                                 <select class="form-select" required aria-label="select example" required
                                     id="roleSelection" name="roleSelection">
                                     <option value="">Role</option>
-                                    <option value="1">Manager</option>
-                                    <option value="2">Seller</option>
-                                    <option value="3">Supervisor</option>
+                                    <% roles.forEach((role, i) => { %>
+                                        <option value="<%-i+1%>"><%-role.name%></option>
+                                    <%}); %>
                                 </select>
                                 <div class="invalid-feedback" id="roleValidationArea">Example invalid select feedback</div>
                             </div>
