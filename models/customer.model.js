@@ -1,7 +1,9 @@
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
+const SALT_WORK_FACTOR = 10;
 
 const customerSchema = new Schema(
   {
@@ -37,6 +39,18 @@ customerSchema.pre("save", function (next) {
       next();
     });
   });
+});
+
+customerSchema.pre("insertMany", async function(next, docs){
+  try {
+    for(const doc of docs){
+      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+      doc.password = await bcrypt.hash(doc.password, salt);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
 });
 
 // Method to compare password
