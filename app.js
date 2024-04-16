@@ -1,16 +1,14 @@
-
+/* app.js main App file */
 import path from "path";
+import env from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import expressLayouts from "express-ejs-layouts";
 
-import env from "dotenv";
-
 import indexRouter from "./routers/index.router.js";
 import { __dirname } from "./settings.js";
 import { initializeDB } from "./utils/db.js";
-
 
 // Set env config vars
 env.config();
