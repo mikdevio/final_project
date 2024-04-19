@@ -37,7 +37,17 @@ export const postLogin = async (req, res) => {
   }
   
   // Open session
+  let options = {
+    maxAge: 20*60*1000,
+    httpOnly: true, 
+    secure: true,
+    sameSite: "None",
+  };
 
+  // Session token
+  const token = userFound.generateAccessJWT();
+  // Set token to response header
+  res.cookie("SessionID", token, options);
   // redirect to dashboard
   res.redirect("/user/dashboard");
 };

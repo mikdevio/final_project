@@ -1,5 +1,8 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+
+import * as settings from "../settings.js";
 
 const Schema = mongoose.Schema;
 
@@ -43,6 +46,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+// Method to hash passwords with save
 userSchema.pre("save", function (next) {
   let user = this;
 
@@ -64,20 +68,32 @@ userSchema.pre("save", function (next) {
     });
   } catch (error) {
     console.log(error);
-  }
+  };
 });
 
+// Method to hash passwords with insertMany
 userSchema.pre("insertMany", async function(next, docs) {
   try {
-
     for(const doc of docs){
       const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
       doc.password = await bcrypt.hash(doc.password, salt);
     };
   } catch (error) {
     console.log(error);
-  }
+  };
 });
+
+// Method to create session token
+userSchema.methods.generateAccessJWT = function() {
+  let payload = {
+    id: this._id,
+  };
+
+  // console.log(settings.SECRET_ACCESS_TOKEN);
+  return jwt.sign(payload, settings.SECRET_ACCESS_TOKEN, {
+    expiresIn:"20m",
+  });
+};
 
 // Method to compare password
 userSchema.methods.comparePassword = function (passwordToValidate) {

@@ -1,6 +1,11 @@
 import path from "path";
 import { fileURLToPath } from 'url';
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
+export const { MONGODB_URL, PORT, SECRET_ACCESS_TOKEN } = process.env;
+
 export const __filename = fileURLToPath(import.meta.url);
 
 export const __dirname = path.dirname(__filename);
