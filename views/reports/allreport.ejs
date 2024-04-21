@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <style>
+      <%- styles %>
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+          <h5>FinalProject v1.0.0</h5><span><%- new Date(Date.now()).toISOString() %></span>
+      </div>
+      <div class="row">
+          <h3>List of all <%- model %>s</h3>
+      </div>
+      <div class="row">   
+          <table class="table table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th scope="column">#</th>
+                <% Object.keys(data[0]._doc).map(col_name => { %>
+                    <% if(!["_id", "password" , "__v" ].includes(col_name)){ %>
+                        <th scope="column"><%- col_name %></th>
+                    <% } %>
+                <% }); %>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.forEach((element, i) => { %>
+                <tr> 
+                  <td scope="row"><%- i+1 %></td>
+                    <% Object.keys(data[0]._doc).map(col_name => { %>
+                      <% if(!["_id", "password" , "__v" ].includes(col_name)){ %>
+                          <% if(["createdAt", "updatedAt"].includes(col_name)){ %>
+                            <td><%- element[col_name].toISOString().replace(/T/, ' ').replace(/\..+/, '') %></td>
+                          <% } else { %>
+                            <td><%- element[col_name] %></td>
+                          <% } %>
+                        <% } %>
+                      <% }); %>
+                    </tr>
+              <% }); %>
+            </tbody>
+          </table>
+      </div>  
+  </div>
+  </body>
+</html>
