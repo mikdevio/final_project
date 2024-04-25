@@ -213,33 +213,98 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Total</span>
-                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payTotal" readonly>
-                                <span class="input-group-text">USD</span>
-                              </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Payment</span>
-                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payPayment">
-                                <span class="input-group-text">USD</span>
-                              </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group input-group-sm mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-sm">Change</span>
-                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payChange" readonly>
-                                <span class="input-group-text">USD</span>
-                              </div>
+                    <div class="container">
+                        <div class="row justify-content-between">
+                            <div class="col-2"><h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1></div>
+                            <div class="col">
+                                <div class="container">
+                                    <div class="row d-flex justify-content-around">
+                                        <div class="col text-nowrap"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Cash</button></div>
+                                        <div class="col text-nowrap"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Credit Card</button></div>
+                                        <div class="col text-nowrap"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Bank transfer</button></div>
+                                        <div class="col text-nowrap"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Paypal</button></div>
+                                        <div class="col text-nowrap"><button type="button" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Bitcoin</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row mb-1">
+                            <div class="card">
+                                <div class="card-body pt-0 pb-0">
+                                    <span class="card-title">Cash</span>
+                                    <div class="container  m-0 p-0">
+                                        <div class="row justify-content-around">
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Total</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payTotal" readonly>
+                                                    <span class="input-group-text">USD</span>
+                                                  </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Payment</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payPayment">
+                                                    <span class="input-group-text">USD</span>
+                                                  </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Change</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payChange" readonly>
+                                                    <span class="input-group-text">USD</span>
+                                                  </div>
+                                            </div>
+                                            <div class="col-1">
+                                                <a href="#" class="btn btn-danger btn-sm" id=""><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="card">
+                                <div class="card-body pt-0 pb-0">
+                                    <span class="card-title">Cash</span>
+                                    <div class="container m-0 p-0">
+                                        <div class="row justify-content-around">
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Total</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payTotal" readonly>
+                                                    <span class="input-group-text">USD</span>
+                                                    </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Payment</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payPayment">
+                                                    <span class="input-group-text">USD</span>
+                                                    </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group input-group-sm mb-3">
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Change</span>
+                                                    <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payChange" readonly>
+                                                    <span class="input-group-text">USD</span>
+                                                    </div>
+                                            </div>
+                                            <div class="col-1">
+                                                <a href="#" class="btn btn-danger btn-sm" id=""><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-sm">Submit</button>
@@ -319,7 +384,7 @@
             btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
 
             // Clear cart button
-            btnClearCart = document.getElementById("btnClearCart");
+            btnClearCart = document.querySelector("#btnClearCart");
 
             // Methods
             updateOrderList = function() {
@@ -353,7 +418,7 @@
                     // Delete button
                     a_td_5.className = "btn btn-danger btn-sm";
                     a_td_5.id = `delete_${order.product._id}`;
-                    a_td_5.innerHTML = '<i class="bi bi-trash"></i></a>'
+                    a_td_5.innerHTML = '<i class="bi bi-trash"></i>'
 
                     // Eventlistener for delete button
                     a_td_5.addEventListener('click', () => {
@@ -456,6 +521,8 @@
                 const payChange = document.querySelector("#payChange");
 
                 payTotal.value = data.totalAmount;
+                payPayment.value = 0;
+                payChange.value = 0 - data.totalAmount;
 
                 payBModal.show();
             }
@@ -527,11 +594,11 @@
                     // 1. Check if a customer is selected or 
                     // any product is added into de cart
                     if(!this.customerSelected) {
-                        errors.push("Customer not selected!!");
+                        errors.push("Customer not selected.");
                     };
 
                     if(this.posCartOrders.length == 0) {
-                        errors.push("No product added to cart!!");
+                        errors.push("No product added to cart.");
                     };
                     if(errors.length != 0) {
                         this.showMessageModal(errors, "<span class='text-warning'><i class='bi bi-exclamation-octagon'></i> Warning</span>");
