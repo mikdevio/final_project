@@ -1,8 +1,18 @@
+import mongoose from "mongoose";
+
+import * as settings from "../settings.js";
+
+import User from "../models/user.model.js";
+import Role from "../models/role.model.js";
 import Product from "../models/product.model.js";
 import Customer from "../models/customer.model.js"
-import User from "../models/user.model.js";
 import Category from "../models/category.model.js";
-import Role from "../models/role.model.js";
+
+
+// MongoDB connection
+export async function mongoDBConnection() {
+  await mongoose.connect(settings.MONGODB_URL);
+}
 
 // TODO: Complete this DB initialization
 export const initializeDB = async () => {

@@ -2,15 +2,14 @@
 import path from "path";
 import env from "dotenv";
 import express from "express";
-import mongoose from "mongoose";
+
 import bodyParser from "body-parser";
 import expressLayouts from "express-ejs-layouts";
 
 import * as settings from "./settings.js";
-import { initializeDB } from "./utils/db.js";
+import { initializeDB, mongoDBConnection } from "./utils/db.js";
 
 import indexRouter from "./routers/index.router.js";
-
 
 // Set env config vars
 env.config();
@@ -19,16 +18,12 @@ env.config();
 const app = express();
 
 // Connection to MongoDB
-main()
+mongoDBConnection()
   .then(() => {
     console.log("MongoDB connection Successfully");
     // initializeDB();
   })
   .catch((err) => console.log(err));
-
-async function main() {
-  await mongoose.connect(settings.MONGODB_URL);
-}
 
 /* App configurations */
 // File paths

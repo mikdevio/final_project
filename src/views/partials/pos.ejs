@@ -152,8 +152,7 @@
                                 </div>
                                 <div class=" row flex-grow-1 mt-2">
                                     <div class=" col-12 d-grid">
-                                        <a href="#" class="btn btn-primary  btn-" id="btnPayAndSaveSale" data-bs-toggle="modal"
-                                        data-bs-target="#payModal">Pay</a>
+                                        <a href="#" class="btn btn-primary btn-sm" id="btnPayAndSaveSale">Pay</a>
                                     </div>
                                 </div>
                             </div>
@@ -218,228 +217,380 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Payment modal body -->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Total</span>
+                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payTotal" readonly>
+                                <span class="input-group-text">USD</span>
+                              </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Payment</span>
+                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payPayment">
+                                <span class="input-group-text">USD</span>
+                              </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-sm">Change</span>
+                                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="payChange" readonly>
+                                <span class="input-group-text">USD</span>
+                              </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // POS > Chart update function
-        let posCartOrders = [];
-        let customerSelected = undefined;
+    <!-- Message Modal -->
+    <div class="modal fade modal-sm" id="msgModal" tabindex="-1" aria-labelledby="msgModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="msgModalTitle">Title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="msgBodyModal">
+                    <!-- Payment modal body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function updateOrderList() {
+    <script type="importmap">
+        {
+          "imports": {
+            "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
+            "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.esm.min.js"
+          }
+        }
+    </script>
 
-            const orderListTable = document.querySelector('#listProductTable')
-            const tableBody = orderListTable.getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = "";
+    <script type="module">
+        import * as boostrap from "bootstrap";
 
-            posCartOrders.forEach((order, i) => {
-                const tr = document.createElement("tr");
-                const th_1 = document.createElement("th");
-                const td_2 = document.createElement("td");
-                const td_3 = document.createElement("td");
-                const td_4 = document.createElement("td");
-                const td_5 = document.createElement("td");
+        class PosController {
 
-                const a_td_5 = document.createElement("a");
-                const input_td_3 = document.createElement("input");
+            // Data from server
+            productList = <%- JSON.stringify(products) %>;
+            customerList = <%- JSON.stringify(customers) %>;
 
+            posCartOrders = [];
+            customerSelected = undefined;
 
-                th_1.innerText = i;
-                th_1.scope = "row";
-                td_2.innerText = order.product.name;
+            // Buttons product list
+            btnsAddProduct = document.querySelectorAll("a.btn.btn-success.btn-sm");
 
-                // Input field
-                input_td_3.className = "form-control form-control-sm";
-                input_td_3.type = "number";
-                input_td_3.min = "1";
-                input_td_3.value = `${order.quantity}`;
-                input_td_3.style = "width: 80px;";
+            // Buttons customer list
+            btnsAddCustomer = document.querySelectorAll("a[id^='select_']");
 
-                td_4.innerText = order.product.price;
-                // Delete button
-                a_td_5.className = "btn btn-danger btn-sm";
-                a_td_5.id = `delete_${order.product._id}`;
-                a_td_5.innerHTML = '<i class="bi bi-trash"></i></a>'
+            // Cart product list
+            orderListTable = document.querySelector('#listProductTable');
 
-                // Eventlistener for delete button
-                a_td_5.addEventListener('click', () => {
-                    let deletedOrder = posCartOrders.find(order2 => order2.product._id == order.product._id);
-                    if (deletedOrder) {
-                        // console.log(deletedOrder);
-                        const iProduct = posCartOrders.indexOf(deletedOrder);
-                        posCartOrders.splice(iProduct, 1);
-                        updateOrderList();
-                        updateFields();
-                    }
+            // Cart fields
+            subtotal_field = document.querySelector('#subtotal');
+            tax_field = document.querySelector('#tax');
+            discount_field = document.querySelector('#discount');
+            total_field = document.querySelector('#total');
+
+            // Customer fields
+            lblCustomer = document.querySelector("#lblCustomer");
+            lblTaxNumber = document.querySelector("#lblTaxNumber");
+
+            // Message modal
+            msgModal = document.querySelector("#msgModal");
+
+            // Payment Modal
+            payModal = document.querySelector("#payModal");
+            payAmountInput = document.querySelector("#payPayment");
+
+            // Payment button
+            btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
+
+            // Clear cart button
+            btnClearCart = document.getElementById("btnClearCart");
+
+            // Methods
+            updateOrderList = function() {
+                
+                const tableBody = this.orderListTable.getElementsByTagName('tbody')[0];
+                tableBody.innerHTML = "";
+
+                this.posCartOrders.forEach((order, i) => {
+                    const tr = document.createElement("tr");
+                    const th_1 = document.createElement("th");
+                    const td_2 = document.createElement("td");
+                    const td_3 = document.createElement("td");
+                    const td_4 = document.createElement("td");
+                    const td_5 = document.createElement("td");
+
+                    const a_td_5 = document.createElement("a");
+                    const input_td_3 = document.createElement("input");
+
+                    th_1.innerText = i;
+                    th_1.scope = "row";
+                    td_2.innerText = order.product.name;
+
+                    // Input field
+                    input_td_3.className = "form-control form-control-sm";
+                    input_td_3.type = "number";
+                    input_td_3.min = "1";
+                    input_td_3.value = `${order.quantity}`;
+                    input_td_3.style = "width: 80px;";
+
+                    td_4.innerText = order.product.price;
+                    // Delete button
+                    a_td_5.className = "btn btn-danger btn-sm";
+                    a_td_5.id = `delete_${order.product._id}`;
+                    a_td_5.innerHTML = '<i class="bi bi-trash"></i></a>'
+
+                    // Eventlistener for delete button
+                    a_td_5.addEventListener('click', () => {
+                        let deletedOrder = this.posCartOrders.find(order2 => order2.product._id == order.product._id);
+                        if (deletedOrder) {
+                            // console.log(deletedOrder);
+                            const iProduct = this.posCartOrders.indexOf(deletedOrder);
+                            this.posCartOrders.splice(iProduct, 1);
+                            this.updateOrderList();
+                            this.updateFields();
+                        }
+                    });
+
+                    // Eventlistener for input number control
+                    input_td_3.addEventListener('input', (e) => {
+                        let changedOrder = this.posCartOrders.find(order2 => order2.product._id == order.product._id);
+                        changedOrder.quantity = e.target.value;
+                        changedOrder.subtotal = changedOrder.quantity * changedOrder.product.price;
+                        changedOrder.discount = changedOrder.quantity * changedOrder.product.discount * changedOrder.product.price;
+                        this.updateFields();
+                    });
+
+                    td_3.append(input_td_3);
+                    td_5.appendChild(a_td_5);
+
+                    tr.appendChild(th_1);
+                    tr.appendChild(td_2);
+                    tr.appendChild(td_3);
+                    tr.appendChild(td_4);
+                    tr.appendChild(td_5);
+
+                    tableBody.append(tr);
+                });
+            }
+
+            initCustomerLabel = function () {
+                if (!this.customerSelected) {
+                    this.lblCustomer.innerText = "Unknown";
+                    this.lblTaxNumber.innerText = "No defined";
+                };
+            }
+
+            updateFields = function () {
+
+                let subtotal = 0;
+                let discount = 0;
+                let tax = 0;
+
+                this.posCartOrders.forEach(order => {
+                    subtotal += order.subtotal;
+                    discount += order.discount;
+                    tax += order.product.tax * order.subtotal;
                 });
 
-                // Eventlistener for input number control
-                input_td_3.addEventListener('input', (e) => {
-                    let changedOrder = posCartOrders.find(order2 => order2.product._id == order.product._id);
-                    changedOrder.quantity = e.target.value;
-                    changedOrder.subtotal = changedOrder.quantity * changedOrder.product.price;
-                    changedOrder.discount = changedOrder.quantity * changedOrder.product.discount * changedOrder.product.price;
-                    updateFields();
+                this.subtotal_field.innerText = `${subtotal.toFixed(2)} USD`;
+                this.tax_field.innerText = `${tax.toFixed(2)} USD`;
+                this.discount_field.innerText = `${discount.toFixed(2)} USD`;
+                this.total_field.innerText = `${(subtotal + tax - discount).toFixed(2)} USD`;
+            }
+
+            updateCustomerLabel = function (customer) {
+                if (customer) {
+                    this.lblCustomer.innerText = `${customer.first_name} ${customer.last_name}`;
+                    this.lblTaxNumber.innerText = `${customer.tax_number}`;
+                };
+            }
+
+            getSaleData = function () {
+                return {
+                    customer: this.customerSelected._id,
+                    products: this.posCartOrders.map(orders => { return { _id: orders.product._id, quantity: orders.quantity } }),
+                    subTotal: Number(document.querySelector("#subtotal").innerText.split(" ")[0]),
+                    totalAmount: Number(document.querySelector("#total").innerText.split(" ")[0]),
+                    taxAmount: Number(document.querySelector("#tax").innerText.split(" ")[0]),
+                    discountAmount: Number(document.querySelector("#discount").innerText.split(" ")[0]),
+                    paymentMode: document.querySelector("#paymentMode").innerText,
+                };
+            }
+
+            showMessageModal = function (msgs, title){
+                const msgBModal = new boostrap.Modal(this.msgModal);
+                const bodyModal = this.msgModal.querySelector("#msgBodyModal");
+                const titleModal = this.msgModal.querySelector("#msgModalTitle")
+
+                let iHtml = "<ol>";
+                msgs.forEach(msg => {
+                    iHtml += `<li>${msg}</li>`;
                 });
+                iHtml += "</ol>";
 
-                td_3.append(input_td_3);
-                td_5.appendChild(a_td_5);
-
-                tr.appendChild(th_1);
-                tr.appendChild(td_2);
-                tr.appendChild(td_3);
-                tr.appendChild(td_4);
-                tr.appendChild(td_5);
-
-                tableBody.append(tr);
-            });
-        };
-
-
-        // Update fields on cart
-        function updateFields() {
-            const subtotal_field = document.querySelector('#subtotal');
-            const tax_field = document.querySelector('#tax');
-            const discount_field = document.querySelector('#discount');
-            const total_field = document.querySelector('#total');
-
-            let subtotal = 0;
-            let discount = 0;
-            let tax = 0;
-
-            posCartOrders.forEach(order => {
-                subtotal += order.subtotal;
-                discount += order.discount;
-                tax += order.product.tax * order.subtotal;
-            });
-
-            subtotal_field.innerText = `${subtotal.toFixed(2)} USD`;
-            tax_field.innerText = `${tax.toFixed(2)} USD`;
-            discount_field.innerText = `${discount.toFixed(2)} USD`;
-            total_field.innerText = `${(subtotal + tax - discount).toFixed(2)} USD`;
-        };
-
-        function updateCustomerLabel(customer) {
-            const lblCustomer = document.querySelector("#lblCustomer");
-            const lblTaxNumber = document.querySelector("#lblTaxNumber");
-            if (customer) {
-                lblCustomer.innerText = `${customer.first_name} ${customer.last_name}`;
-                lblTaxNumber.innerText = `${customer.tax_number}`;
+                bodyModal.innerHTML = iHtml;
+                titleModal.innerHTML = title;
+                msgBModal.show();
             }
-        }
 
-        function initCustomerLabel() {
-            const lblCustomer = document.querySelector("#lblCustomer");
-            const lblTaxNumber = document.querySelector("#lblTaxNumber");
-            if (!customerSelected) {
-                lblCustomer.innerText = "Unknown";
-                lblTaxNumber.innerText = "No defined";
+            showPaymentModal = function (data){
+                const payBModal = new boostrap.Modal(this.payModal);
+                const payTotal = document.querySelector("#payTotal");
+                const payPayment = document.querySelector("#payPayment");
+                const payChange = document.querySelector("#payChange");
+
+                payTotal.value = data.totalAmount;
+
+                payBModal.show();
             }
-        }
 
-        function getSaleData() {
-            return saleData = {
-                customer: customerSelected._id,
-                products: posCartOrders.map(orders => { return { _id: orders.product._id, quantity: orders.quantity } }),
-                subTotal: Number(document.querySelector("#subtotal").text().split(" ")[0]),
-                totalAmount: Number(document.querySelector("#total").text().split(" ")[0]),
-                taxAmount: Number(document.querySelector("#tax").text().split(" ")[0]),
-                discountAmount: Number(document.querySelector("#discount").text().split(" ")[0]),
-                paymentMode: document.querySelector("#paymentMode").text(),
-            };
-            // console.log(saleData);
-        };
+            addProductToChart = function() {
 
-        async function postData(url = "", data = {}) {
-            const response = await fetch(url, {
-                method: "POST",
-                mode: "cors",
-                cache: "no-cache",
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                redirect: "follow",
-                referrerPolicy: "no-referrer",
-                body: JSON.stringify(data),
-            });
-            return response;
-        }
+                this.btnsAddProduct.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        let addedProduct = this.productList.find(product => product._id == btn.id);
+                        if (this.posCartOrders.find(order => order.product == addedProduct)) {
+                            const editedOrder = this.posCartOrders.find(order => order.product._id == addedProduct._id);
 
+                            editedOrder.quantity += 1;
+                            editedOrder.subtotal = editedOrder.quantity * editedOrder.product.price;
+                            editedOrder.discount = editedOrder.quantity * editedOrder.product.discount * editedOrder.product.price;
 
-        // POS logic
-        (() => {
-            // Products data from server
-            const productList = <%- JSON.stringify(products) %>;
-            const customerList = <%- JSON.stringify(customers) %>;
+                        } else {
+                            this.posCartOrders.push({
+                                product: addedProduct,
+                                quantity: 1,
+                                subtotal: addedProduct.price,
+                                discount: addedProduct.discount * addedProduct.price
+                            });
+                        }
+                        // console.log(posProductOrders);
+                        this.updateOrderList();
+                        this.updateFields();
+                    });
+                });
+            }
 
-            // Initialize customer marquee
-            initCustomerLabel();
+            clearCartList = function() {
+                // Clear porducts cart and customer
+                this.btnClearCart.addEventListener('click', () => {
+                    this.posCartOrders.length = 0;
+                    this.customerSelected = undefined;
+                    this.updateOrderList();
+                    this.updateFields();
+                    this.initCustomerLabel();
+                });
+            }
 
-            // Add products to cart
-            const btnsAddProduct = document.querySelectorAll("a.btn.btn-success.btn-sm");
-            btnsAddProduct.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let addedProduct = productList.find(product => product._id == btn.id);
-                    if (posCartOrders.find(order => order.product == addedProduct)) {
-                        const editedOrder = posCartOrders.find(order => order.product._id == addedProduct._id);
+            addCustomer = function() {
+                this.btnsAddCustomer.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        let addedCustomer = this.customerList.find(customer => customer._id == btn.id.split("_")[1])
+                        if (!this.customerSelected) {
+                            this.customerSelected = addedCustomer;
+                            this.updateCustomerLabel(addedCustomer);
+                        }
+                    });
+                });
+            }
+            
+             // Clear msgModal
+            clearMsgModal = function() {
+                this.msgModal.addEventListener("hidden.bs.modal", (e) => {
+                    const bodyModal = document.querySelector("#msgBodyModal");
+                    bodyModal.innerHTML = "";
+                });
+            }
+            
+            processingPayment = function() {
+                // Payment button eventlistener
+                this.btnPayAndSaveSale.addEventListener('click', () => {
 
-                        editedOrder.quantity += 1;
-                        editedOrder.subtotal = editedOrder.quantity * editedOrder.product.price;
-                        editedOrder.discount = editedOrder.quantity * editedOrder.product.discount * editedOrder.product.price;
+                    let errors = [];
+                    
+                    // 1. Check if a customer is selected or 
+                    // any product is added into de cart
+                    if(!this.customerSelected) {
+                        errors.push("Customer not selected!!");
+                    };
 
+                    if(this.posCartOrders.length == 0) {
+                        errors.push("No product added to cart!!");
+                    };
+                    if(errors.length != 0) {
+                        this.showMessageModal(errors, "<span class='text-warning'><i class='bi bi-exclamation-octagon'></i> Warning</span>");
                     } else {
-                        posCartOrders.push({
-                            product: addedProduct,
-                            quantity: 1,
-                            subtotal: addedProduct.price,
-                            discount: addedProduct.discount * addedProduct.price
-                        })
-                    }
-                    // console.log(posProductOrders);
-                    updateOrderList();
-                    updateFields();
-                });
-            });
+                        // 2. Show payment modal 
+                        let data = this.getSaleData();
+                        this.showPaymentModal(data);
+                        
+                        // 3. Get sale data
+                        // let data = getSaleData();
+                        
+                        // 4. Post sale data
+                        // postData("/sale/create-pos", { data });
 
-            // Clear porducts from cart
-            const btnClearCart = document.getElementById("btnClearCart");
-            btnClearCart.addEventListener('click', () => {
-                posCartOrders.length = 0;
-                customerSelected = undefined;
-                updateOrderList();
-                updateFields();
-                initCustomerLabel();
-            });
-
-            // Add customer
-            const btnsAddCustomer = document.querySelectorAll("a[id^='select_']");
-            btnsAddCustomer.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    let addedCustomer = customerList.find(customer => customer._id == btn.id.split("_")[1])
-                    if (!customerSelected) {
-                        customerSelected = addedCustomer;
-                        updateCustomerLabel(addedCustomer);
+                        // 5. Update pos window
+                        // window.location.reload(true);
                     }
                 });
-            });
+            }
 
-            // Pay event
-            // const btnPayAndSaveSale = document.querySelector("#btnPayAndSaveSale");
-            // btnPayAndSaveSale.addEventListener('click', () => {
-            //     // Get Sale data
-            //     let data = getSaleData();
-            //     console.log(data);
-            //     postData("/sale/create-pos", { data });
-            //     // Clear POS
-            //     window.location.reload(true);
-            // });
+            updatingPaymentModal = function() {
+                    // PayAmount modified
+                this.payAmountInput.addEventListener("input", (e) => {
+                    const payTotal = document.querySelector("#payTotal");
+                    const payChange = document.querySelector("#payChange");
+
+                    payChange.value = (e.target.value - payTotal.value).toFixed(2);
+                });
+            }
+
+            start = function(){
+
+                // 1. Init customer labels
+                this.initCustomerLabel();
+
+                // 2. Register add product event listener
+                this.addProductToChart();
+
+                // 3. Register clear cart event listener
+                this.clearCartList();
+
+                // 4. Register add customer event listener
+                this.addCustomer();
+
+                // 5. Register msgModal event listener
+                this.clearMsgModal();
+
+                // 6. Register payment processing event listener
+                this.processingPayment();
+
+                // 7. Register updating payment modal event listener
+                this.updatingPaymentModal();
+            }
+
+        }
+
+        (()=>{
+            const posController = new PosController();
+            posController.start();
         })();
+
     </script>
