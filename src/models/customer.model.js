@@ -1,5 +1,9 @@
+import fs from "fs";
+import path from "path";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+
+import * as settings from "../settings.js";
 
 const Schema = mongoose.Schema;
 
@@ -14,7 +18,10 @@ const customerSchema = new Schema(
     phone: String,
     password: String,
     img: {
-      data: Buffer,
+      data: {
+        type: Buffer,
+        default: fs.readFileSync(path.join(settings.__dirname, "public/assets/img/perfile_default.png")),
+      },
       contentType: String
     }
   },

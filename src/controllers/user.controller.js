@@ -4,13 +4,13 @@ import path from "path";
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
 import * as report from "../utils/report.js";
+import * as settings from "../settings.js";
 
 import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
-import { __layout_main, __layout_dashboard } from "../settings.js";
 
 export const getLogin = (req, res) => {
   res.render("user.login.ejs", {
-    layout: __layout_main,
+    layout: settings.__layout_main,
     message: "",
   });
 };
@@ -22,7 +22,7 @@ export const postLogin = async (req, res) => {
   const userFound = await User.findOne({ email: data.email }).select("+password");
   if(!userFound){
     return res.render("user.login.ejs", {
-      layout: __layout_main,
+      layout: settings.__layout_main,
       message: `User ${data.email}  not found.`,
     });
   };
@@ -31,7 +31,7 @@ export const postLogin = async (req, res) => {
   const passValid = await userFound.comparePassword(data.password);
   if(!passValid){
     return res.render("user.login.ejs", {
-      layout: __layout_main,
+      layout: settings.__layout_main,
       message: `Password incorrect.`,
     });
   }
@@ -56,7 +56,7 @@ export const getSignup = async(req, res) => {
   const rolesList = await Role.find({});
   res.render("user.signup.ejs", {
     roles: rolesList,
-    layout: __layout_main,
+    layout: settings.__layout_main,
     message: "",
   });
 };
@@ -78,7 +78,7 @@ export const postSignup = async (req, res) => {
     if(userExist){
       const rolesList = await Role.find({});
       return res.render("user.signup.ejs",{
-        layout: __layout_main,
+        layout: settings.__layout_main,
         roles: rolesList,
         status: "failed",
         data: [],
@@ -89,7 +89,7 @@ export const postSignup = async (req, res) => {
     const savedUser = await newUser.save();
     const {role, ...user_data } = savedUser._doc;
     res.render("user.login.ejs", {
-      layout: __layout_main,
+      layout: settings.__layout_main,
       status: "success",
       data: [user_data],
       message: "Thank you for registering with us. Your account has been successfully created."
@@ -108,7 +108,7 @@ export const postSignup = async (req, res) => {
 
 export const getDashboard = (req, res) => {
   res.render("user.dashboard.ejs", {
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -118,7 +118,7 @@ export const getAll = async (_, res) => {
     data: usersList,
     table_title: "Users",
     model: "user",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -130,7 +130,7 @@ export const editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -139,7 +139,7 @@ export const newItem = (req, res) => {
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "user",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -150,6 +150,10 @@ export const createItem = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     role: req.body.role,
+    img: { 
+      data: fs.readFileSync(path.join(settings.__dirname, "uploads/user", req.body["img.data"])),
+      contentType: "image/png",
+    },
   });
 
   try {

@@ -44,6 +44,10 @@ export const createItem = async (req, res) => {
     email: req.body.email,
     phone: req.body.phone,
     password: req.body.password,
+    img: { 
+      data: fs.readFileSync(path.join(settings.__dirname, "uploads/customer", req.body["img.data"])),
+      contentType: "image/png",
+    },
   });
 
   try {

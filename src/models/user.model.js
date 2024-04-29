@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
@@ -35,7 +37,10 @@ const userSchema = new Schema(
       max: 25,
     },
     img: {
-      data: Buffer,
+      data: { 
+        type: Buffer,
+        default: fs.readFileSync(path.join(settings.__dirname, "public/assets/img/perfile_default.png")),
+      },
       contentType: String
     },
     role: { 

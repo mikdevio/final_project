@@ -13,7 +13,9 @@ const saleSchema = new Schema(
     subTotal: Number,
     totalAmount: Number,
     taxAmount: Number,
-    discountAmount: Number
+    discountAmount: Number,
+    payWith: Number,
+    payChange: Number
   },
   { timestamps: true }
 );

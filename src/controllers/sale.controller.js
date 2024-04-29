@@ -76,14 +76,20 @@ export const createItem = async (req, res) => {
 
 export const createFromPos = async(req, res) => {
 
+  console.log(req.body.data);
+
   const newSale = new Sale({
     customer: req.body.data.customer,
     products: req.body.data.products,
     totalAmount: req.body.data.totalAmount,
     subTotal: req.body.data.subTotal,
     discountAmount: req.body.data.discountAmount,
-    taxAmount: req.body.data.taxAmount
+    taxAmount: req.body.data.taxAmount,
+    payWith: req.body.data.payWith,
+    payChange: req.body.data.payChange,
   });
+
+  console.log(newSale);
 
   const Manager = User.findOne({role:"Manager"});
   
@@ -95,13 +101,13 @@ export const createFromPos = async(req, res) => {
 
   try {
     // Update products quantity
-    for (const product of req.body.data.products) {
-      await Product.findOneAndUpdate(
-        {_id: product.productID}, 
+    newSale.products.forEach(async product => {
+      await Product.findByIdAndUpdate(
+        {_id: product._id}, 
         {$inc: {'quantity': -product.quantity}}
       )
-      ;
-    }
+    });
+
     await newSale.save();
     await newBill.save();
     res.json({success: true});

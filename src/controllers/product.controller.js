@@ -6,7 +6,9 @@ import * as report from "../utils/report.js";
 import Product from "../models/product.model.js";
 import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 
-import { __layout_dashboard } from "../settings.js";
+import upload from "../middlewares/upload.js";
+
+import * as settings from "../settings.js";
 
 export const getAll = async (req, res) => {
   const productsList = await Product.find({});
@@ -14,7 +16,7 @@ export const getAll = async (req, res) => {
     data: productsList,
     table_title: "Products",
     model: "product",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -25,7 +27,7 @@ export const editItem = async (req, res) => {
   res.render("partials/edit.form.ejs", {
     data: fields,
     model_name: "product",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
@@ -34,16 +36,21 @@ export const newItem = (req, res) => {
   res.render("partials/new.form.ejs", {
     data: fields,
     model_name: "product",
-    layout: __layout_dashboard,
+    layout: settings.__layout_dashboard,
   });
 };
 
 export const createItem = async (req, res) => {
+
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
     cost: req.body.cost,
     tax: req.body.tax,
+    img: { 
+      data: fs.readFileSync(path.join(settings.__dirname, "uploads/product", req.body["img.data"])),
+      contentType: "image/png",
+    },
     discount: req.body.discount,
     description: req.body.description,
     quantity: req.body.quantity,

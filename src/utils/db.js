@@ -43,7 +43,7 @@ export const initializeDB = async () => {
       tax: 0.12,
       discount: 0.05,
       description: "Desktop keyboard black color 124 keys",
-      quantity: 37,
+      quantity: 38,
     },
   ]);
 

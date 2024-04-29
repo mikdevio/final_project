@@ -42,6 +42,12 @@
                   <td>
                     <% if(["createdAt", "updatedAt"].includes(col)) { %>
                       <span><%= element[col].toISOString().replace(/T/, ' ').replace(/\..+/, '') %></span>
+                    <% } else if (col == "img") { %>
+                      <img
+                      src="data:image/<%= element[col].contentType %>;base64,
+                              <%= element[col].data.toString('base64')%>"
+                      style="height: 35px; width: 35px;"
+                      />
                     <% } else { %>
                       <span><%= element[col] %></span>
                     <% } %>

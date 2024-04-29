@@ -1,4 +1,8 @@
+import fs from "fs";
+import path from "path";
 import mongoose from "mongoose";
+
+import { __dirname } from "../settings.js";
 
 const Schema = mongoose.Schema;
 
@@ -12,7 +16,10 @@ const productSchema = new Schema(
     description: String,
     quantity: Number,
     img: {
-      data: Buffer,
+      data: { 
+              type: Buffer,
+              default: fs.readFileSync(path.join(__dirname, "public/assets/img/product_default.png"))
+            },
       contentType: String,
     },
     category: { 
@@ -24,3 +31,4 @@ const productSchema = new Schema(
 );
 
 export default mongoose.model("Product", productSchema);
+

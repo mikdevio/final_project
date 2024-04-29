@@ -15,7 +15,10 @@ router.route("/new")
     .get(productController.newItem);
 
 router.route("/create")
-    .post(productController.createItem);
+    .post(
+            upload.single('img'), 
+            productController.createItem
+        );
 
 router.route("/update/:id")
     .post(productController.updateItem);
