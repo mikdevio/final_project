@@ -10,6 +10,9 @@ const Schema = mongoose.Schema;
 
 const SALT_WORK_FACTOR = 10;
 
+// TODO: Merge User and Customer 
+
+
 // Schema definition
 const userSchema = new Schema(
   {
@@ -39,6 +42,7 @@ const userSchema = new Schema(
     img: {
       data: { 
         type: Buffer,
+        // FIXME: Improve path for default image
         default: fs.readFileSync(path.join(settings.__dirname, "public/assets/img/perfile_default.png")),
       },
       contentType: String

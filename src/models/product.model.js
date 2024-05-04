@@ -18,6 +18,7 @@ const productSchema = new Schema(
     img: {
       data: { 
               type: Buffer,
+               // FIXME: Improve path for default image
               default: fs.readFileSync(path.join(__dirname, "public/assets/img/product_default.png"))
             },
       contentType: String,

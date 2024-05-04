@@ -70,30 +70,16 @@ export const initializeDB = async () => {
   // Insert data on users collection
   await User.insertMany([
     {
-      first_name: "Miguel",
-      last_name: "Villacis",
-      email: "villacis.mhva@gmail.com",
-      password: "12345",
-    },
-    {
-      first_name: "Pablo",
-      last_name: "Tonato",
-      email: "tonato.potm@hotmail.com",
-      password: "12345",
-    },
-    {
-      first_name: "Borrable",
-      last_name: "Borrado",
-      email: "borrable.usuario@gmail.com",
-      password: "12345",
-      __v: 0,
-    },
-    {
-      first_name: "Usuario",
-      last_name: "Borrable",
-      email: "usuario@gmail.com",
+      first_name: "admin",
+      last_name: "admin",
+      email: "admin@gmail.com",
       password: "123456",
-      __v: 0,
+    },
+    {
+      first_name: "manager",
+      last_name: "admin ",
+      email: "manager@gmail.com",
+      password: "123456",
     },
   ]);
 

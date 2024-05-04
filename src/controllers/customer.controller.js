@@ -37,6 +37,8 @@ export const newItem = (req, res) => {
 };
 
 export const createItem = async (req, res) => {
+
+  // TODO: Check functionality upload middleware <Customer>
   const newCustomer = new Customer({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -94,15 +96,7 @@ export const generateReport = async (req, res) => {
 
     await report.generateAllReport(customerList, "customer");
 
-    // TODO: Fix path problem for report pdf file
-    // // Header file
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'attachment; filename=all-customer.pdf');
-    // res.setHeader('Content-Length', fs.statSync('all-customer.pdf').size);
-
-    // // File stream
-    // const pdfStream = fs.createReadStream('all-customer.pdf');
-    // pdfStream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/customer/all");
 

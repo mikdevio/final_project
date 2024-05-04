@@ -86,15 +86,7 @@ export const generateReport = async (req, res) => {
 
     await report.generateAllReport(roleList, "role");
 
-    // TODO: Fix path problem for report pdf file
-    // // Header file
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'attachment; filename=all-role.pdf');
-    // res.setHeader('Content-Length', fs.statSync('all-role.pdf').size);
-
-    // // File stream
-    // const pdfStream = fs.createReadStream('all-role.pdf');
-    // pdfStream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/user/all");
 

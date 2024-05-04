@@ -41,7 +41,7 @@ export const newItem = (req, res) => {
 };
 
 export const createItem = async (req, res) => {
-
+  // TODO: Check functionality upload middleware <Product>
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -102,11 +102,7 @@ export const generateReport = async (req, res) => {
 
     const file_url = await report.generateAllReport(productsList, "product");
 
-    // let stream = fs.createReadStream(file_url);
-    // let filename = path.basename(file_url);
-    // res.setHeader("Content-disposition", "inline; filename='"+filename+"'");
-    // res.setHeader("Content-type", "application/pdf");
-    // // stream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/product/all");
 

@@ -84,15 +84,7 @@ export const generateReport = async (req, res) => {
 
     await report.generateAllReport(categoryList, "category");
 
-    // TODO: Fix path problem for report pdf file
-    // // Header file
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'attachment; filename=all-category.pdf');
-    // res.setHeader('Content-Length', fs.statSync('all-category.pdf').size);
-
-    // // File stream
-    // const pdfStream = fs.createReadStream('all-category.pdf');
-    // pdfStream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/user/all");
 

@@ -39,16 +39,11 @@ export const newItem = (req, res) => {
 };
 
 export const createItem = async (req, res) => {
-//   const newUser = new Bill({
-//     first_name: req.body.first_name,
-//     last_name: req.body.last_name,
-//     email: req.body.email,
-//     password: req.body.password,
-//     role: req.body.role,
-//   });
+
+  // TODO: Complete create procedure <Bill>
 
   try {
-    // const result = await newUser.save();
+    
     res.redirect("/bill/all");
   } catch (err) {
     console.log(err);
@@ -58,6 +53,7 @@ export const createItem = async (req, res) => {
 export const updateItem = async (req, res) => {
   const billId = req.params.id;
   try {
+    // TODO: Complete update procedure <Bill>
     // await User.findOneAndUpdate(
     //   { _id: userId },
     //   {
@@ -90,15 +86,7 @@ export const generateReport = async (req, res) => {
 
     await report.generateAllReport(billList, "bill");
 
-    // TODO: Fix path problem for report pdf file
-    // // Header file
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'attachment; filename=all-bill.pdf');
-    // res.setHeader('Content-Length', fs.statSync('all-bill.pdf').size);
-
-    // // File stream
-    // const pdfStream = fs.createReadStream('all-bill.pdf');
-    // pdfStream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/user/all");
 

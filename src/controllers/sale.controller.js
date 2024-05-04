@@ -57,6 +57,7 @@ export const newItem = (req, res) => {
 };
 
 export const createItem = async (req, res) => {
+  // TODO: Complete new fields form <Sale>
   const newSale = new Sale({
     customer: req.body.customer,
     products: req.body.products,
@@ -71,7 +72,7 @@ export const createItem = async (req, res) => {
     res.redirect("/sale/all");
   } catch (err) {
     console.log(err);
-  }
+  }s
 };
 
 export const createFromPos = async(req, res) => {
@@ -120,6 +121,7 @@ export const updateItem = async (req, res) => {
   const saleId = req.params.id;
 
   try {
+    // TODO: Complete update procedure <Sale>
     await Product.findOneAndUpdate(
       { _id: saleId },
       {
@@ -150,15 +152,7 @@ export const generateReport = async (req, res) => {
 
     await report.generateAllReport(saleList, "sale");
 
-    // TODO: Fix path problem for report pdf file
-    // // Header file
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'attachment; filename=all-sale.pdf');
-    // res.setHeader('Content-Length', fs.statSync('all-sale.pdf').size);
-
-    // // File stream
-    // const pdfStream = fs.createReadStream('all-sale.pdf');
-    // pdfStream.pipe(res);
+    // TODO: Add open pdf file functionality
 
     res.redirect("/sale/all");
 
