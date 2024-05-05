@@ -325,18 +325,6 @@
             return response;
         }
 
-        // class Sale {
-        //     customer= "";
-        //     products= [];
-        //     subTotal= 0;
-        //     totalAmount= 0;
-        //     taxAmount= 0;
-        //     discountAmount= 0;
-        //     parWith= 0;
-        //     payChange= 0;
-        //     paymeny=[];
-        // }
-
         class PosController {
 
             // Data from server
@@ -482,7 +470,7 @@
             getSaleData = function () {
                 return {
                     customer: this.customerSelected._id,
-                    products: this.posCartOrders.map(orders => { return { _id: orders.product._id, quantity: orders.quantity } }),
+                    products: this.posCartOrders.map(orders => { return { product: orders.product._id, quantity: orders.quantity } }),
                     subTotal: Number(document.querySelector("#subtotal").innerText.split(" ")[0]),
                     totalAmount: Number(document.querySelector("#total").innerText.split(" ")[0]),
                     taxAmount: Number(document.querySelector("#tax").innerText.split(" ")[0]),
@@ -620,11 +608,8 @@
 
             processPayment = function() {
                 this.submitPayment.addEventListener("click", ()=>{
-
                     // 1. Get sale data
                     let data = this.getSaleData();
-
-                    console.log(data);
                     
                     if(data.payChange>=0){
                         // 2. Post sale data

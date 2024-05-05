@@ -1,5 +1,6 @@
 import multer from "multer";
 
+// FIXME: Multer is not saving files on upload folder
 
 // File Storage
 const storage = multer.diskStorage({

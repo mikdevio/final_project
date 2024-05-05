@@ -12,22 +12,28 @@ import Customer from "../models/customer.model.js";
 import { dataEmptyFromModel, dataFilledFromModel } from "../utils/func.js";
 import { __layout_dashboard } from "../settings.js";
 
-export const callPos = async (req, res) => {
-
-  const productList = await Product.find({});
-  const categoryList = await Category.find({});
-  const customerList = await Customer.find({});
-
-  res.render("partials/pos.ejs", {
-    products: productList,
-    categories: categoryList,
-    customers: customerList,
-    layout: __layout_dashboard,
-  });
-};
 
 export const getAll = async (req, res) => {
-  const salesList = await Sale.find({});
+  const salesList = await Sale.find()
+  .populate({
+    path: "customer",
+    select: [
+      "first_name", 
+      "last_name", 
+      "tax_number",
+      "phone",
+      "img",
+      "-_id"
+    ]
+  })
+  .populate({
+    path:"products",
+    populate: {
+      path: "product",
+      select: "name -_id"
+    },
+  }).exec();
+
   res.render("partials/table.ejs", {
     data: salesList,
     table_title: "Sales",
@@ -35,6 +41,7 @@ export const getAll = async (req, res) => {
     layout: __layout_dashboard,
   });
 };
+
 
 export const editItem = async (req, res) => {
   const id = req.params.id;
@@ -77,7 +84,7 @@ export const createItem = async (req, res) => {
 
 export const createFromPos = async(req, res) => {
 
-  console.log(req.body.data);
+  // console.log(req.body.data);
 
   const newSale = new Sale({
     customer: req.body.data.customer,
@@ -90,7 +97,7 @@ export const createFromPos = async(req, res) => {
     payChange: req.body.data.payChange,
   });
 
-  console.log(newSale);
+  // console.log(newSale);
 
   const Manager = User.findOne({role:"Manager"});
   
@@ -104,7 +111,8 @@ export const createFromPos = async(req, res) => {
     // Update products quantity
     newSale.products.forEach(async product => {
       await Product.findByIdAndUpdate(
-        {_id: product._id}, 
+        // FIXME: Solve this ambiguity product.product
+        {_id: product.product}, 
         {$inc: {'quantity': -product.quantity}}
       )
     });
@@ -144,6 +152,20 @@ export const deleteItem = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const callPos = async (req, res) => {
+
+  const productList = await Product.find({});
+  const categoryList = await Category.find({});
+  const customerList = await Customer.find({});
+
+  res.render("partials/pos.ejs", {
+    products: productList,
+    categories: categoryList,
+    customers: customerList,
+    layout: __layout_dashboard,
+  });
 };
 
 export const generateReport = async (req, res) => {
