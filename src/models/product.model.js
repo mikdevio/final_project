@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import mongoose from "mongoose";
 
-import { __dirname } from "../settings.js";
+import * as settings from "../settings.js";
 
 const Schema = mongoose.Schema;
 
@@ -18,8 +18,7 @@ const productSchema = new Schema(
     img: {
       data: { 
               type: Buffer,
-               // FIXME: Improve path for default image
-              default: fs.readFileSync(path.join(__dirname, "public/assets/img/product_default.png"))
+              default: fs.readFileSync(settings.__product_default)
             },
       contentType: String,
     },

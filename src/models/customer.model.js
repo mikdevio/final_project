@@ -20,8 +20,7 @@ const customerSchema = new Schema(
     img: {
       data: {
         type: Buffer,
-         // FIXME: Improve path for default image
-        default: fs.readFileSync(path.join(settings.__dirname, "public/assets/img/perfile_default.png")),
+        default: fs.readFileSync(settings.__perfile_default),
       },
       contentType: String
     }

@@ -21,3 +21,7 @@ export const __layout_dashboard = path.join(__layouts, "dashboard");
 export const __public = path.join(__dirname, "public");
 
 export const __css = path.join(__public, "css");
+
+export const __perfile_default = path.join(__public, "assets/img/perfile_default.png");
+
+export const __product_default = path.join(__public, "assets/img/product_default.png");

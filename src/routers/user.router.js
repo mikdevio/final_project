@@ -1,4 +1,5 @@
 import express from "express";
+import upload from "../middlewares/upload.js";
 
 import * as userController from "../controllers/user.controller.js";
 
@@ -27,7 +28,10 @@ router.route("/new")
   .get(userController.newItem);
 
 router.route("/create")
-  .post(userController.createItem);
+  .post(
+    upload.single('img'), 
+    userController.createItem
+  );
 
 router.route("/update/:id")
   .post(userController.uptadeItem);

@@ -42,13 +42,14 @@ export const newItem = (req, res) => {
 
 export const createItem = async (req, res) => {
   // TODO: Check functionality upload middleware <Product>
+  // console.log(req.body.img)
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
     cost: req.body.cost,
     tax: req.body.tax,
     img: { 
-      data: fs.readFileSync(path.join(settings.__dirname, "uploads/product", req.body["img.data"])),
+      data: fs.readFileSync(path.join(settings.__dirname, "uploads", req.body.img)),
       contentType: "image/png",
     },
     discount: req.body.discount,

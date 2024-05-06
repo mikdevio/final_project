@@ -5,7 +5,7 @@
       </h5>
     </div>
     <div class="card-body pb-0">
-      <form action="/<%= model_name %>/create" method="post">
+      <form action="/<%= model_name %>/create" method="post" enctype="multipart/form-data">
         <% let type=undefined; Object.keys(data).forEach(prop_name=> { %> 
           <% if(!["_id", "createdAt", "updatedAt", "img.contentType", "img.data"].includes(prop_name)) { %>
           <div class="form-floating mb-3">
@@ -20,23 +20,24 @@
                 <label for="<%= prop_name %>">
                   <%= prop_name %>
                 </label>
-            </div>
+          </div>
           <% } else if (prop_name == "img.data") { %>
-            <div class="container-fluid p-0 align-items-center">
-              <div class="row">
-                <div class="col-3 ">
-                  <% if(model_name == "product") { %>
-                    <img src="/public/assets/img/product_default.png" class="img-fluid img-thumbnail" alt="...">
-                  <%} else { %>
-                    <img src="/public/assets/img/perfile_default.png" class="img-fluid img-thumbnail" alt="...">
-                  <% } %>
-                </div>
-                <div class="col-auto">
-                  <input type="file" class="form-control" id="<%= prop_name %>" name="<%= prop_name %>"
-                  placeholder="<%= prop_name %>"/>
-                </div>
-              </div>    
-            </div>
+          <div class="container-fluid p-0 align-items-center">
+            <div class="row">
+              <div class="col-3 ">
+                <% if(model_name == "product") { %>
+                  <% default_path="/public/assets/img/product_default.png" %>
+                <%} else { %>
+                  <% default_path="/public/assets/img/perfile_default.png" %>
+                <% } %>
+                  <img id="imgSelected" src=<%- default_path %> class="img-fluid img-thumbnail" alt="...">
+              </div>
+              <div class="col-9">
+                <input type="file" class="form-control" id="imgInput" name="img"
+                placeholder="<%= prop_name %>"/>
+              </div>
+            </div>    
+          </div>
           <%  } %>
         <% }); %>
         <div class="d-flex justify-content-end gap-2">
@@ -51,3 +52,15 @@
     </div>
   </div>
 </div>
+
+<script>
+  const imgSelected = document.querySelector("#imgSelected");
+  const inputImg = document.querySelector("#imgInput");
+
+  inputImg.addEventListener("change", (e) => {
+    const [file] = e.target.files;
+    if(file){
+      imgSelected.src = URL.createObjectURL(file);
+    };
+  });
+</script>

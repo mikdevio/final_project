@@ -1,4 +1,6 @@
 import express from "express";
+import upload from "../middlewares/upload.js";
+
 import * as customerController from '../controllers/customer.controller.js';
 
 const router = express.Router();
@@ -13,7 +15,10 @@ router.route("/new")
     .get(customerController.newItem);
 
 router.route("/create")
-    .post(customerController.createItem);
+    .post(
+        upload.single('img'),
+        customerController.createItem
+    );
 
 router.route("/update/:id")
     .post(customerController.updateItem);
