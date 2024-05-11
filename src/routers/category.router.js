@@ -1,28 +1,51 @@
 import express from "express";
 
 import * as categoryController from "../controllers/category.controller.js";
+import { VerifyAuth } from "../middlewares/verify.js";
+
 
 const router = express.Router();
 
 router.route("/all")
-    .get(categoryController.getAll);
+    .get(
+        VerifyAuth,
+        categoryController.getAll
+    );
 
 router.route("/edit/:id")
-    .get(categoryController.editItem);
+    .get(
+        VerifyAuth,
+        categoryController.editItem
+    );
 
 router.route("/new")
-    .get(categoryController.newItem)
+    .get(
+        VerifyAuth,
+        categoryController.newItem
+    );
 
 router.route("/create")
-    .post(categoryController.createItem);
+    .post(
+        VerifyAuth,
+        categoryController.createItem
+    );
 
 router.route("/update/:id")
-    .post(categoryController.updateItem);
+    .post(
+        VerifyAuth,
+        categoryController.updateItem
+    );
 
 router.get("/delete/:id")
-    .get(categoryController.deleteItem);
+    .get(
+        VerifyAuth,
+        categoryController.deleteItem
+    );
 
 router.route("/report")
-    .get(categoryController.generateReport);
+    .get(
+        VerifyAuth,
+        categoryController.generateReport
+    );
 
 export default router;

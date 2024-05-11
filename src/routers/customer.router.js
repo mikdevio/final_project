@@ -2,31 +2,53 @@ import express from "express";
 import upload from "../middlewares/upload.js";
 
 import * as customerController from '../controllers/customer.controller.js';
+import { VerifyAuth } from "../middlewares/verify.js";
+
 
 const router = express.Router();
 
 router.route("/all")
-    .get(customerController.getAll);
+    .get(
+        VerifyAuth,
+        customerController.getAll
+    );
 
 router.route("/edit/:id")
-    .get(customerController.editItem);
+    .get(
+        VerifyAuth,
+        customerController.editItem
+    );
 
 router.route("/new")
-    .get(customerController.newItem);
+    .get(
+        VerifyAuth,
+        customerController.newItem
+    );
+    
 
 router.route("/create")
     .post(
+        VerifyAuth,
         upload.single('img'),
         customerController.createItem
     );
 
 router.route("/update/:id")
-    .post(customerController.updateItem);
+    .post(
+        VerifyAuth,
+        customerController.updateItem
+    );
 
 router.route("/delete/:id")
-    .get(customerController.deleteItem);
+    .get(
+        VerifyAuth,
+        customerController.deleteItem
+    );
 
 router.route("/report")
-    .get(customerController.generateReport);
+    .get(
+        VerifyAuth,
+        customerController.generateReport
+    );
 
 export default router;

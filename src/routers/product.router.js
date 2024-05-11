@@ -2,31 +2,55 @@ import express from "express";
 import upload from "../middlewares/upload.js";
 
 import * as productController from '../controllers/product.controller.js';
+import { VerifyAuth } from "../middlewares/verify.js";
+
 
 const router = express.Router();
 
 router.route('/all')
-    .get(productController.getAll);
+    .get(
+        VerifyAuth,
+        productController.getAll
+    );
 
 router.route("/edit/:id")
-    .get(productController.editItem);
+    .get
+    VerifyAuth,
+    (productController.editItem
+        
+    );
 
 router.route("/new")
-    .get(productController.newItem);
+    .get
+    VerifyAuth,
+    (productController.newItem
+        
+    );
 
 router.route("/create")
     .post(
-            upload.single('img'), 
-            productController.createItem
-        );
+        
+        VerifyAuth,
+        upload.single('img'), 
+        productController.createItem
+    );
 
 router.route("/update/:id")
-    .post(productController.updateItem);
+    .post(
+        VerifyAuth,
+        productController.updateItem
+    );
 
 router.route("/delete/:id")
-    .get(productController.deleteItem);
+    .get(
+        VerifyAuth,
+        productController.deleteItem
+    );
 
 router.route("/report")
-    .get(productController.generateReport);
+    .get(
+        VerifyAuth,
+        productController.generateReport
+    );
 
 export default router;

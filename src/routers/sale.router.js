@@ -1,33 +1,61 @@
 import express from "express";
 
+import { VerifyAuth } from "../middlewares/verify.js"
+
 import * as saleController from "../controllers/sale.controller.js";
 const router = express.Router();
 
 router.route("/pos")
-    .get(saleController.callPos);
+    .get(
+        VerifyAuth,
+        saleController.callPos
+    );
 
 router.route("/all")
-    .get(saleController.getAll);
+    .get(
+        VerifyAuth,
+        saleController.getAll
+    );
 
 router.route("/edit/:id")
-    .get(saleController.editItem);
+    .get(VerifyAuth, 
+        saleController.editItem
+    );
 
 router.route("/new")
-    .get(saleController.newItem);
+    .get(
+        VerifyAuth,
+        saleController.newItem
+    );
 
 router.route("/create")
-    .post(saleController.createItem);
+    .post(
+        VerifyAuth,
+        saleController.createItem
+    );
 
 router.route("/create-pos")
-    .post(saleController.createFromPos);
+    .post(
+        VerifyAuth,
+        saleController.createFromPos
+    );
 
 router.route("/update/:id")
-    .post(saleController.updateItem);
+    .post(
+        VerifyAuth,
+        saleController.updateItem
+    );
 
 router.get("/delete/:id")
-    .get(saleController.deleteItem);
+    .get(
+        VerifyAuth,
+        saleController.deleteItem
+    );
 
 router.route("/report")
-    .get(saleController.generateReport);
+    .get(
+        VerifyAuth,
+        saleController.generateReport
+    );
 
 export default router;

@@ -2,28 +2,51 @@ import path from "path";
 import express from "express";
 
 import * as roleController from "../controllers/role.controller.js";
+import { VerifyAuth } from "../middlewares/verify.js";
+
 
 const router = express.Router();
 
 router.route("/all")
-    .get(roleController.getAll);
+    .get(
+        VerifyAuth,
+        roleController.getAll
+    );
 
 router.route("/edit/:id")
-    .get(roleController.editItem);
+    .get(
+        VerifyAuth,
+        roleController.editItem
+    );
 
 router.route("/new")
-    .get(roleController.newItem);
+    .get(
+        VerifyAuth,
+        roleController.newItem
+    );
 
 router.route("/create")
-    .post(roleController.createItem);
+    .post(
+        VerifyAuth,
+        roleController.createItem
+    );
 
 router.route("/update/:id")
-    .post(roleController.updateItem);
+    .post(
+        VerifyAuth,
+        roleController.updateItem
+    );
 
 router.route("/delete/:id")
-    .get(roleController.deleteItem);
+    .get(
+        VerifyAuth,
+        roleController.deleteItem
+    );
 
 router.route("/report")
-    .get(roleController.generateReport);
+    .get(
+        VerifyAuth,
+        roleController.generateReport
+    );
 
 export default router;

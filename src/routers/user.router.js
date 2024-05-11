@@ -1,6 +1,8 @@
 import express from "express";
 import upload from "../middlewares/upload.js";
 
+import { VerifyAuth } from "../middlewares/verify.js"
+
 import * as userController from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -16,30 +18,51 @@ router
   .post(userController.postSignup);
 
 router.route("/dashboard")
-  .get(userController.getDashboard);
+  .get(
+    VerifyAuth, 
+    userController.getDashboard
+  );
 
 router.route("/all")
-  .get(userController.getAll);
+  .get(
+    VerifyAuth,
+    userController.getAll
+  );
 
 router.route("/edit/:id")
-  .get(userController.editItem);
+  .get(
+    VerifyAuth, 
+    userController.editItem
+  );
 
 router.route("/new")
-  .get(userController.newItem);
+  .get(
+    VerifyAuth, 
+    userController.newItem
+  );
 
 router.route("/create")
   .post(
+    VerifyAuth,
     upload.single('img'), 
     userController.createItem
   );
 
 router.route("/update/:id")
-  .post(userController.uptadeItem);
+  .post(
+    VerifyAuth, 
+    userController.uptadeItem
+  );
 
 router.route("/delete/:id")
-  .get(userController.deleteItem);
+  .get(
+    VerifyAuth, 
+    userController.deleteItem
+  );
 
 router.route("/report")
-  .get(userController.generateReport);
+  .get(VerifyAuth, 
+    userController.generateReport
+  );
 
 export default router;
