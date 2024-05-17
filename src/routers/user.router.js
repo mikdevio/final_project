@@ -13,6 +13,10 @@ router
   .post(userController.postLogin);
 
 router
+  .route("/logout")
+  .get(userController.getLogout);
+
+router
   .route("/signup")
   .get(userController.getSignup)
   .post(userController.postSignup);

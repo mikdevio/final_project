@@ -3,6 +3,8 @@ import path from "path";
 
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
+import Blacklist from "../models/blacklist.model.js";
+
 import * as report from "../utils/report.js";
 import * as settings from "../settings.js";
 
@@ -50,6 +52,38 @@ export const postLogin = async (req, res) => {
   res.cookie("SessionID", token, options);
   // redirect to dashboard
   res.redirect("/user/dashboard");
+};
+
+export const getLogout = async(req, res) => {
+
+  try {
+    const authHeader = req.headers["cookie"];
+
+    if(!authHeader) return res.sendStatus(204);
+
+    const cookie = authHeader.split("=")[1];
+    const accessToken = cookie.split(";")[0];
+    const checkIfBlacklisted = await Blacklist.findOne({
+      token: accessToken,
+    });
+
+    if (checkIfBlacklisted) return res.sendStatus(204);
+
+    const newBlacklist = new Blacklist({ token: accessToken });
+
+    await newBlacklist.save();
+
+    res.setHeader("Clear-Site-Data", "cookies");
+    res.redirect("/user/login");
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      status: "error",
+      message: "Internal Server Error: " + error,
+    });
+  }
+
 };
 
 export const getSignup = async(req, res) => {

@@ -1,5 +1,6 @@
-import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
+import Blacklist from "../models/blacklist.model.js";
 
 import * as settings from "../settings.js";
 
@@ -10,16 +11,27 @@ export async function VerifyAuth(req, res, next) {
 
         if(!authHeader) return res.sendStatus(401);
 
-        const cookie = authHeader.split("=")[1]
+        const cookie = authHeader.split("=")[1];
+        const accessToken = cookie.split(";")[0];
+
+        const checkIfBlacklisted = await Blacklist.findOne({
+            token: accessToken,
+        });
+
+        if(checkIfBlacklisted)
+            return res
+                .status(401)
+                .json( {message: "Session expired."});
+
 
         jwt.verify(cookie, settings.SECRET_ACCESS_TOKEN, async (err, decoded) =>{
             if(err){return res.status(401).json({message: "This session has expired. Please login"})};
 
-            const {id} = decoded;
-            const user = await User.findById(id);
-            const { password, ...data} = user._doc;
+            // const {id} = decoded;
+            // const user = await User.findById(id);
+            // const { password, ...data} = user._doc;
 
-            req.user = data;
+            // req.user = data;
             next();
         });
 
